@@ -18,7 +18,8 @@
 
 ### 1.1. Background & Motivation
 
-In October 2023, following the immense financial success of your messaging platform Slackr, you were invited to several tech talks and travelled all over the 
+##### In October 2023, following the immense financial success of your messaging platform Slackr, you were invited to several tech talks and travelled all over the 
+
 country. In your travels, you've had to endure several uncomfortable hotel stays. During these stays you've been struck with another brilliant startup idea for a person to person property renting service **AirBrB**. 
 
 You've contacted your developer friends and settled on functionality, feature set and a RESTful specification/interface for AirBrB. You've decided to outsource your back-end to another company and took on the task of building the front-end (optionally with another one of your friends). You wrote a list of requirements and functionalities your frontend should adhere to (described in section 2). You also decided to complete this application in ReactJS, a declarative framework for building single page applications. This front-end will interact with a Restful API that the team you've outsourced to are producing, based on the pre-defined interface.
@@ -66,26 +67,29 @@ Please note: This assignment, unlike assignment 2, has a lot of functionality av
 This focuses on the basic user interface to register and log in to the site. Login and registration are required to gain access to making bookings as a guest, leave reviews and to manage your own listings as a host.
 
 #### 2.1.1. Login Screen
- * A unique route must exist for this screen
- * User must be able to enter their `email` and `password`.
- * If the form submission fails, a reasonable error message is shown
- * A button must exist to allow submission of form
+
+ * A unique route must exist for this screen ✅
+ * User must be able to enter their `email` and `password`.✅
+ * If the form submission fails, a reasonable error message is shown ✅
+ * A button must exist to allow submission of form ✅
 
 #### 2.1.2. Register Screen
- * A unique route must exist for this screen
- * User must be able to enter their `email` and `password` and `name`
- * A confirm `password` field should exist where user re-enters their password.
- * If the two passwords don't match, the user should receive an error popup before submission.
- * If the form submission fails, a reasonable error message is shown
- * A button must exist to allow submission of form
+
+ * A unique route must exist for this screen✅
+ * User must be able to enter their `email` and `password` and `name` ✅
+ * A confirm `password` field should exist where user re-enters their password.✅
+ * If the two passwords don't match, the user should receive an error popup before submission. ✅
+ * If the form submission fails, a reasonable error message is shown ✅
+ * A button must exist to allow submission of form ✅
 
 #### 2.1.3. Logout Button
- * A logout button, when clicked, returns you to the landing screen whilst being no longer logged in.
+
+ * A logout button, when clicked, returns you to the landing screen whilst being no longer logged in. ✅
 
 #### 2.1.4. Items on all screens
  * On all screens, for a user who is logged in / authorised:
-   * The logout button exists somewhere
-   * A button exists that will take the user to the screen to view their hosted listings.
+   * The logout button exists somewhere ✅
+   * A button exists that will take the user to the screen to view their hosted listings. 
    * A button exists that will take the user to the screen to view all listings.
 
 ### 2.2. Feature Set 2. Creating & Editing & Publishing a Hosted Listing (16% for solo, 14% for pairs)
@@ -135,8 +139,9 @@ For logged in users, they are able to create their own listings (as a host) that
 #### 2.2.4. Publishing a listing
  * For a listing to "go live" means that the listing becomes visible to other AirBrB users on the screen described in ``2.4``.
  * On the hosted listings screen described in ``2.2.1``, add the ability to make an individual listing "go live".
+
  	- A listing must have at least one availability date range (e.g. a listing could be available between 1st and 3rd of November and then between the 5th and 6th of November). 
-	- The way you define the availability ranges is entirely up to you. For example, you could use the following schemas:
+ 	- The way you define the availability ranges is entirely up to you. For example, you could use the following schemas:
 ```javascript
 //Example 1:
 availability: [{ start: date1, end: date2 }, { start: date3, end: date4 }, ...];
@@ -504,7 +509,7 @@ knowledge.
 This assignment is due *Friday 17th November, 10pm*.
 
 To submit your assignment, you must you've pushed all of your code to your gitlab master branch. You can check if you've done this properly by seeing what code is on the gitlab site on your master branch.
- 
+
 We will collect the latest work on your master branch of gitlab at the time of submission.
 
 It is your responsibiltiy to ensure that your code can run successfully when cloned fresh from Gitlab.

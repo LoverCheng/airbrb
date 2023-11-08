@@ -23,6 +23,6 @@
       "forceConsistentCasingInFileNames": true,
       "resolveJsonModule": true
     },
-    "include": ["./src/**/*"]
+    "include": ["./src/**/*", "src/Apis/mainPage/navigationComponents/navigationBar.jsx"]
   }
   
