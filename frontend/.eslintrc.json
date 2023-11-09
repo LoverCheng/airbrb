@@ -1,48 +1,35 @@
 {
-    "root": true,
-    "env": {
+  "root": true,
+  "env": {
       "browser": true,
       "es2021": true,
       "jest": true
-    },
-    "extends": ["eslint:recommended", "plugin:react/recommended", "standard", "plugin:@typescript-eslint/recommended"],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
+  },
+  "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "standard"
+  ],
+  "parserOptions": {
       "ecmaFeatures": {
-        "jsx": true
+          "jsx": true
       },
       "ecmaVersion": 12,
       "sourceType": "module"
-    },
-    "plugins": ["react"],
-    "rules": {
-      "react/prop-types": [2, { "ignore": ["children"] }],
-      "react/jsx-filename-extension": [
-        "error",
-        {
-          "extensions": [".ts", ".tsx", ".js", ".jsx"]
-        }
-      ],
-      "import/extensions": [
-        "error",
-        {
-          "extensions": [".ts", ".tsx", ".js", ".jsx", ".gif", ".svg"]
-        }
-      ],
+  },
+  "plugins": [
+      "react"
+  ],
+  "rules": {
       "linebreak-style": 0,
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
       "semi": 0,
       "comma-dangle": 0,
-      "no-undef": "off"
-    },
-    "settings": {
+      "react/prop-types": 0
+  },
+  "settings": {
       "react": {
-        "version": "detect"
-      },
-      "import/resolver": {
-        "node": {
-          "extensions": [".js", ".jsx", ".ts", ".tsx", ".gif", ".svg"]
-        }
+          "version": "detect"
       }
-    }
   }
-  
+}

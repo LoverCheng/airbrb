@@ -40,7 +40,7 @@ export default function MenuComponent () {
     // Remove the token from localStorage
     localStorage.removeItem('token');
     // Redirect to home or any other page if needed
-    // navigate('/');
+    navigate('/');
   };
 
   const handleAddClick = () => {

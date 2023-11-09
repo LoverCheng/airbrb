@@ -66,14 +66,14 @@ Please note: This assignment, unlike assignment 2, has a lot of functionality av
 
 This focuses on the basic user interface to register and log in to the site. Login and registration are required to gain access to making bookings as a guest, leave reviews and to manage your own listings as a host.
 
-#### 2.1.1. Login Screen
+#### 2.1.1. Login Screen ✅
 
  * A unique route must exist for this screen ✅
  * User must be able to enter their `email` and `password`.✅
  * If the form submission fails, a reasonable error message is shown ✅
  * A button must exist to allow submission of form ✅
 
-#### 2.1.2. Register Screen
+#### 2.1.2. Register Screen ✅
 
  * A unique route must exist for this screen✅
  * User must be able to enter their `email` and `password` and `name` ✅
@@ -82,11 +82,12 @@ This focuses on the basic user interface to register and log in to the site. Log
  * If the form submission fails, a reasonable error message is shown ✅
  * A button must exist to allow submission of form ✅
 
-#### 2.1.3. Logout Button
+#### 2.1.3. Logout Button ✅
 
  * A logout button, when clicked, returns you to the landing screen whilst being no longer logged in. ✅
 
 #### 2.1.4. Items on all screens
+
  * On all screens, for a user who is logged in / authorised:
    * The logout button exists somewhere ✅
    * A button exists that will take the user to the screen to view their hosted listings. 
@@ -112,15 +113,15 @@ For logged in users, they are able to create their own listings (as a host) that
 
 #### 2.2.2. Hosted Listing Create
 * On the hosted listing screen (`2.2.1`) a button should exist that allows you to create a new listing. When you click on it, you are taken to another screen that requires you to provide the following details:
-	- Listing Title
-	- Listing Address
-	- Listing Price (per night)
-	- Listing Thumbnail
-	- Property Type
-	- Number of bathrooms on the property
-	- Property bedrooms (e.g. each bedroom could include number of beds and their type)
-	- Property amenities
-* Using a button, a new listing on the server is created and visibly added to the dashboard once all of the required fields have been filled out correctly.
+	- Listing Title ✅
+	- Listing Address ✅
+	- Listing Price (per night) ✅
+	- Listing Thumbnail ✅
+	- Property Type ✅
+	- Number of bathrooms on the property ✅
+	- Property bedrooms (e.g. each bedroom could include number of beds and their type) ✅
+	- Property amenities ✅
+* Using a button, a new listing on the server is created and visibly added to the dashboard once all of the required fields have been filled out correctly. ✅
 
 #### 2.2.3. Edit AirBrB Listing
 * A unique route must exist for this screen that is parameterised on the listing ID.
@@ -167,6 +168,7 @@ When the app loads, regardless of whether a user is logged in or not, they can a
   * All remaining listings should be displayed in alphabetical order of title.
 
 #### 2.3.2. Search Filters
+
 * On this listings screen, a search section must exist for the user to filter via search parameters. You are only required to be able to search by one of the parameters described below at a time.
 * The search section will consists of an input text box:
   * The input text box will take in a search string, and will search title and city location properties of listings, and only display those that match.
@@ -184,6 +186,7 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 ### 2.4. Feature Set 4. Viewing and Booking Listings (9% for solo, 8% for pairs)
 
 #### 2.4.1. View a Selected Listing
+
  * A unique route must exist for this screen that is parameterised on the Listing ID
  * For `2.3`, when a listing is clicked on, this screen should appear and display information about a specific listing.
  * On this screen the user is given the listing they have decided to view in 2.4.1. This consists of:
