@@ -3,7 +3,7 @@ import { Button, TextField, IconButton, Grid } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import propTypes from 'prop-types';
-import { BedroomContext, useContext } from './bedroomContext';
+import { BedroomContext, useContext } from '../bedroomContext';
 
 const BedroomForm = ({ updateListingInfo }) => {
   const { bedrooms, setBedrooms } = useContext(BedroomContext);

@@ -62,7 +62,7 @@ The requirements describe a series of **screens**. Screens can be popups/modals,
 
 Please note: This assignment, unlike assignment 2, has a lot of functionality available whilst not logged in. Logging in just adds extra functionality. If you're unsure what we mean by this behaviour, you can play around with the Airbnb website for comparison.
 
-### 2.1. Feature Set 1. Admin Auth (10% for solo, 8% for pairs)
+### 2.1. Feature Set 1. Admin Auth (10% for solo, 8% for pairs) 
 
 This focuses on the basic user interface to register and log in to the site. Login and registration are required to gain access to making bookings as a guest, leave reviews and to manage your own listings as a host.
 
@@ -111,7 +111,8 @@ For logged in users, they are able to create their own listings (as a host) that
 * Each listing should have a clickable element relating to it that takes you to the screen to edit that particular listing (`2.2.3`).
 * A button exists on this screen that allows you to delete a particular listing.
 
-#### 2.2.2. Hosted Listing Create
+#### 2.2.2. Hosted Listing Create ✅
+
 * On the hosted listing screen (`2.2.1`) a button should exist that allows you to create a new listing. When you click on it, you are taken to another screen that requires you to provide the following details:
 	- Listing Title ✅
 	- Listing Address ✅
@@ -123,7 +124,8 @@ For logged in users, they are able to create their own listings (as a host) that
 	- Property amenities ✅
 * Using a button, a new listing on the server is created and visibly added to the dashboard once all of the required fields have been filled out correctly. ✅
 
-#### 2.2.3. Edit AirBrB Listing
+#### 2.2.3. Edit AirBrB Listing 
+
 * A unique route must exist for this screen that is parameterised on the listing ID.
 * The user should be able to edit the following: 
 	- Title

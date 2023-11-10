@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import InputAdornment from '@mui/material/InputAdornment';
-import BedroomForm from './bedroomComponent';
+import BedroomForm from './components/bedroomComponent';
 import { BedroomContext } from './bedroomContext';
 import { fileToDataUrl } from '../../utils/fileToDataUrl';
 import http from '../../utils/http';
@@ -134,10 +134,8 @@ const AddNew = () => {
       amenities: cleanedData.metadata.amenities,
     }));
     if (isInvalid) {
-      console.log('Invalid data');
       return;
     }
-    console.log('cleanedData', cleanedData);
     http.post('listings/new', cleanedData).then((res) => {
       if (!res.error) {
         console.log('Successfully added new listing');

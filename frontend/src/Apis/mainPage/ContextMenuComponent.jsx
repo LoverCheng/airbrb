@@ -49,11 +49,18 @@ export default function MenuComponent () {
     navigate('/listings/new');
   }
 
+  const handleHostedClick = () => {
+    setters.handleMenuClose();
+    // openAddModal();
+    navigate('/listings/hosted');
+  }
+
   const getMenuItems = () => {
     if (token) {
       // we need to give key to each MenuItem
       // With keys, React can track which items have changed, been added, or been removed
       return [<MenuItem key="listingNew" onClick={handleAddClick}>Airbnb your place</MenuItem>,
+              <MenuItem key="listingHosted" onClick={handleHostedClick}>Listings Hosted</MenuItem>,
                <MenuItem key="logout" onClick={handleLogoutClick}>Log out</MenuItem>];
     } else {
       return [

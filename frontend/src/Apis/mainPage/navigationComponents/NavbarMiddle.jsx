@@ -12,12 +12,16 @@ import { StyledInputBase } from './InputComponent';
 import { Context, useContext } from './navContext';
 import { useTheme } from '@mui/material/styles';
 import styled from 'styled-components';
-import { fileToDataUrl } from '../../../utils/fileToDataUrl';
+// import logo from file but not use fetch
+import logo from '../../../assets/Airbnb_Logo_Bélo.svg';
+import { useNavigate } from 'react-router-dom';
 
 const StyledIconSymbol = styled.img`
   width: 100px;
   height: auto;
   display: ${({ theme }) => theme.breakpoints.up('sm') ? 'block' : 'none'};
+  // changes the cursor to a pointer
+  cursor: pointer;
 `;
 
 function SvgIconSymbol (props) {
@@ -33,25 +37,11 @@ function SvgIconSymbol (props) {
 
 const Navbar = () => {
   const { getters, setters } = useContext(Context);
-  const [img, setImg] = React.useState('');
+  const navigate = useNavigate();
 
-  React.useEffect(() => {
-    // Fetch the SVG file from the public directory
-    fetch('/Airbnb_Logo_Bélo.svg')
-      .then(response => response.blob()) // Convert the response to a blob
-      .then(blob => {
-        // Create a new file from the blob
-        const file = new File([blob], 'Airbnb_Logo_Bélo.svg', { type: 'image/svg+xml' });
-        return fileToDataUrl(file); // Convert the file to a data URL
-      })
-      .then(dataUrl => {
-        setImg(dataUrl); // Set the data URL to the img state
-        // console.log(img);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }, []);
+  const handleIconLogoClick = () => {
+    navigate('/');
+  };
 
   return (
     // remove shadow of nav bar
@@ -64,9 +54,10 @@ const Navbar = () => {
       }}
     >
         <Toolbar>
-          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-            <SvgIconSymbol src={img} alt="icon"
-            />
+          <Box sx={{ display: { xs: 'none', md: 'block' } }}
+               onClick={handleIconLogoClick}
+          >
+            <SvgIconSymbol src={logo} alt="icon"/>
           </Box>
           <Box sx={{ flexGrow: 2, display: 'flex', justifyContent: 'center' }}>
             <Search>

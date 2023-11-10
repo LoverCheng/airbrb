@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom
 import MainPage from './Apis/mainPage/MainPage';
 import { ModalWrapper } from './Apis/adminAuth/modals';
 import AddNew from './Apis/listings/addNew';
+import ListingsHosted from './Apis/listings/ListingsHosted';
 
 const EmptyComponent = () => null;
 
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="signUp" element={<EmptyComponent/>}/>
         </Route>
         <Route path="/listings/new" element={<AddNew/>}/>
+        <Route path="/listings/hosted" element={<ListingsHosted/>}/>
       </Routes>
     </Router>
   );

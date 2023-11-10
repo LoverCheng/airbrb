@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import MenuComponent from '../ContextComponent';
+import MenuComponent from '../ContextMenuComponent';
 import MobileMenuComponent from './mobileMenuComponent';
 import Navbar from './NavbarMiddle';
 import { initialValue, Context } from './navContext';
