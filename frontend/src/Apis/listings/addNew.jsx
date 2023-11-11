@@ -8,13 +8,14 @@ import {
   Button,
   InputLabel,
   Select,
+  Menu,
   MenuItem,
   FormControl,
   Box,
   Card,
   CardContent,
   CardMedia,
-  FormHelperText
+  FormHelperText,
 } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -47,7 +48,6 @@ const AddNew = () => {
     bedrooms: [],
     amenities: '',
   });
-  const [imagePreview, setImagePreview] = useState('');
   // error hint modal
   const [modalOpen, setModalOpen] = useState(false);
   const [hintMessage, setHintMessage] = useState('');
@@ -55,6 +55,11 @@ const AddNew = () => {
   // initialize the bedrooms as none { beds: '0', bedType: '' }
   const [bedrooms, setBedrooms] = useState([]);
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [imagePreview, setImagePreview] = useState('');
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [contextMenu, setContextMenu] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const handleChange = (event) => {
     // use the value of `event.target.name` as the property name
     // asynchronously set the property value in state
@@ -77,15 +82,6 @@ const AddNew = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
   };
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      fileToDataUrl(file).then((dataUrl) => {
-        setImagePreview(dataUrl);
-        setListing({ ...listing, thumbnail: dataUrl });
-      });
-    }
-  };
 
   // Function to send data to backend
   const handleSubmit = () => {
@@ -101,6 +97,7 @@ const AddNew = () => {
         amenities: listing.amenities,
         propertyType: listing.propertyType,
         rates: [],
+        images: imagePreviews,
       }
     }
     const cleanedData = stripWhitespace({ ...originalData });
@@ -117,6 +114,7 @@ const AddNew = () => {
       cleanedData.metadata.bathrooms,
       // originalData.metadata.bedrooms.length, // Assuming that # of bedrooms is 0
       cleanedData.metadata.amenities,
+      cleanedData.metadata.images,
     ];
     const isInvalid = requiredFields.some(field => field == null || field === '');
 
@@ -133,10 +131,13 @@ const AddNew = () => {
       bathrooms: cleanedData.metadata.bathrooms,
       bedrooms: cleanedData.metadata.bedrooms,
       amenities: cleanedData.metadata.amenities,
+      images: cleanedData.metadata.images,
     }));
     if (isInvalid) {
       return;
     }
+    console.log(cleanedData);
+
     http.post('listings/new', cleanedData).then((res) => {
       if (!res.error) {
         console.log('Successfully added new listing');
@@ -179,6 +180,93 @@ const AddNew = () => {
       }
     }));
   };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      fileToDataUrl(file).then((dataUrl) => {
+        setImagePreview(dataUrl);
+        setListing({ ...listing, thumbnail: dataUrl });
+      });
+    }
+  };
+
+  const handleImagesChange = async (event) => {
+    if (event.target.files) {
+      const filesArray = Array.from(event.target.files);
+      const dataUrlArray = await Promise.all(
+        filesArray.map(file => fileToDataUrl(file))
+      );
+      console.log(filesArray);
+      setImagePreviews((prevImages) => [...prevImages, ...dataUrlArray]);
+      event.target.value = '';
+    }
+  };
+
+  const handleCloseContextMenu = () => {
+    setContextMenu(null);
+  };
+
+  const handleDeleteImage = () => {
+    // remove the image from the imagePreviews array according to the index
+    setImagePreviews((prev) => prev.filter((_, i) => i !== selectedImage));
+    handleCloseContextMenu();
+  };
+
+  const handleContextMenu = (event, index) => {
+    event.preventDefault();
+    setSelectedImage(index);
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: event.clientX - 2,
+            mouseY: event.clientY - 4,
+          }
+          // emulate native context menu behavior more closely
+        : null,
+    );
+  };
+
+  const renderImagePreviews = () => (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'start',
+        alignItems: 'center',
+        overflowX: 'auto', // Allows for scrolling if many images
+        mt: 2,
+      }}
+    >
+      {imagePreviews.map((imagePreviewUrl, index) => (
+        <Box key={index} onContextMenu={(e) => handleContextMenu(e, index)}>
+          <CardMedia
+            key={index}
+            component="img"
+            sx={{
+              width: 160, // Set a fixed width for each image
+              height: 90, // Set a fixed height for each image
+              mr: 2, // Adds a margin to the right of each image
+            }}
+            image={imagePreviewUrl}
+            alt={`Thumbnail ${index}`}
+          />
+          </Box>
+      ))}
+      <Menu
+        open={contextMenu !== null}
+        onClose={handleCloseContextMenu}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          contextMenu !== null
+            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+            : undefined
+        }
+      >
+        <MenuItem onClick={handleDeleteImage}>Delete</MenuItem>
+      </Menu>
+    </Box>
+  );
 
   return (
     <BedroomContext.Provider value={{ bedrooms, setBedrooms }}>
@@ -344,18 +432,18 @@ const AddNew = () => {
           error= { buttonClicked && !listing.amenities }
         />
 
-        <Card>
+        <Card sx={{ mb: '15px' }}>
           <CardContent>
             <Typography variant="h6">Add your Thumbnail</Typography>
             <input
               accept="image/*"
               style={{ display: 'none' }}
-              id="raised-button-file"
+              id="add-thumbnail-file"
               multiple
               type="file"
-              onChange={handleImageChange}
+              onChange = {handleImageChange}
             />
-            <label htmlFor="raised-button-file">
+            <label htmlFor="add-thumbnail-file">
               <Button
                 variant="contained"
                 component="span"
@@ -366,12 +454,18 @@ const AddNew = () => {
             </label>
             {imagePreview
               ? (
+                <Box sx={{ mt: '10px' }}>
                   <CardMedia
                     component="img"
-                    sx={{ width: 'auto', maxHeight: 200, marginTop: 2 }}
+                    sx={{
+                      width: 160,
+                      height: 90,
+                      mr: 2
+                    }}
                     image={imagePreview}
                     alt="Listing Thumbnail"
                   />
+                </Box>
                 )
               : (
                   <Typography color="error">
@@ -379,6 +473,30 @@ const AddNew = () => {
                   </Typography>
                 )
             }
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent>
+            <Typography variant="h6">Add your Images</Typography>
+            <input
+              accept="image/*"
+              style={{ display: 'none' }}
+              id="add-images-file"
+              multiple
+              type="file"
+              onChange={handleImagesChange}
+            />
+            <label htmlFor="add-images-file">
+              <Button
+                variant="contained"
+                component="span"
+                startIcon={<PhotoCamera />}
+              >
+                Upload
+              </Button>
+            </label>
+            {imagePreviews.length > 0 ? renderImagePreviews() : null}
           </CardContent>
         </Card>
 

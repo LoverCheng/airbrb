@@ -115,27 +115,27 @@ For logged in users, they are able to create their own listings (as a host) that
 #### 2.2.2. Hosted Listing Create ✅
 
 * On the hosted listing screen (`2.2.1`) a button should exist that allows you to create a new listing. When you click on it, you are taken to another screen that requires you to provide the following details:
-	- Listing Title
-	- Listing Address
-	- Listing Price (per night)
-	- Listing Thumbnail
-	- Property Type
-	- Number of bathrooms on the property
-	- Property bedrooms (e.g. each bedroom could include number of beds and their type)
-	- Property amenities
+	- Listing Title ✅
+	- Listing Address ✅
+	- Listing Price (per night) ✅
+	- Listing Thumbnail ✅
+	- Property Type ✅
+	- Number of bathrooms on the property ✅
+	- Property bedrooms (e.g. each bedroom could include number of beds and their type) ✅
+	- Property amenities ✅
 * Using a button, a new listing on the server is created and visibly added to the dashboard (the Hosted Listings Screen) once all of the required fields have been filled out correctly.
 
-* A unique route must exist for this screen that is parameterised on the listing ID.
+* A unique route must exist for this screen that is parameterised on the listing ID. 
 * The user should be able to edit the following: 
-	- Title
-	- Address
-	- Thumbnail
-	- Price (per night)
-	- Type
-	- Number of bathrooms
-	- Bedrooms (incorporate editing of beds as part of bedrooms)
-	- Amenities
-	- List of property images
+	- Title 👀
+	- Address 👀
+	- Thumbnail 👀
+	- Price (per night) 👀
+	- Type 👀
+	- Number of bathrooms 👀
+	- Bedrooms (incorporate editing of beds as part of bedrooms) 👀
+	- Amenities 👀
+	- List of property images 👀
 * Updates can auto-save, or a save button can exist that saves the updates and returns you to the hosted listings screen.
 
 #### 2.2.4. Publishing a listing
@@ -249,7 +249,8 @@ When the app loads, regardless of whether a user is logged in or not, they can a
  * For `2.2.1`, when a new listing is created, the user can optionally upload a .json file containing the full data for a listing. The data structure is validated on the frontend before being passed to the backend normally. 
  * If you implement this feature, you must attach an example  .json into your repo in the project folder. This file must have name `2.6.json` . This is so we can actually test that it works while marking.
 
-#### 2.6.4 YouTube Listing Thumbnail 
+#### 2.6.4 YouTube Listing Thumbnail
+
 * For any given listing, making it possible to use a Playable YouTube video as the listing thumbnail. This youtube video URL becomes a field in the create/edit hosted listing screen.
 
 ### 2.7. Linting

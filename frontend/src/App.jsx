@@ -28,6 +28,7 @@ const App = () => {
         </Route>
         <Route path="/listings/new" element={<AddNew/>}/>
         <Route path="/listings/hosted" element={<ListingsHosted/>}/>
+        <Route path="/listings/update" element={<AddNew/>}/>
       </Routes>
     </Router>
   );

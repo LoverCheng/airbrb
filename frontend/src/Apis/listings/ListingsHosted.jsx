@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useNavigate } from 'react-router-dom';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import http from '../../utils/http';
@@ -96,6 +97,7 @@ const ListingsHosted = () => {
   const ratingValue = 2.4;
   const [modalOpen, setModalOpen] = useState(false);
   const [hintMessage, setHintMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleDelete = async (id) => {
     // Handle the delete action (e.g., remove the card)
@@ -113,6 +115,13 @@ const ListingsHosted = () => {
 
   const handleCloseModal = () => {
     setModalOpen(false);
+  };
+
+  const handleCardClick = (listing) => {
+    // Handle the click event for the card
+    console.log('Card clicked for listing:', listing.id);
+    console.log(listing);
+    navigate('/listings/update', { state: { ...listing } });
   };
 
   useEffect(() => {
@@ -203,6 +212,7 @@ const ListingsHosted = () => {
                     cursor: 'pointer',
                     userSelect: 'none'
                   }}
+                  onClick={() => handleCardClick(listing)}
                 >
                   <DeleteButton onClick={() => handleDelete(listing.id)}>
                     <DeleteIcon />
