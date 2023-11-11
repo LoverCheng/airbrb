@@ -13,6 +13,7 @@
 ## 0. Change Log
 
 31/10/23 - Removed leftovers from previous Assignment (removed "custom.js" and other minor details)
+04/11/23 - Clarified what the dashboard is for 2.2.2.
 
 ## 1. Before you start
 
@@ -114,17 +115,15 @@ For logged in users, they are able to create their own listings (as a host) that
 #### 2.2.2. Hosted Listing Create ✅
 
 * On the hosted listing screen (`2.2.1`) a button should exist that allows you to create a new listing. When you click on it, you are taken to another screen that requires you to provide the following details:
-	- Listing Title ✅
-	- Listing Address ✅
-	- Listing Price (per night) ✅
-	- Listing Thumbnail ✅
-	- Property Type ✅
-	- Number of bathrooms on the property ✅
-	- Property bedrooms (e.g. each bedroom could include number of beds and their type) ✅
-	- Property amenities ✅
-* Using a button, a new listing on the server is created and visibly added to the dashboard once all of the required fields have been filled out correctly. ✅
-
-#### 2.2.3. Edit AirBrB Listing 
+	- Listing Title
+	- Listing Address
+	- Listing Price (per night)
+	- Listing Thumbnail
+	- Property Type
+	- Number of bathrooms on the property
+	- Property bedrooms (e.g. each bedroom could include number of beds and their type)
+	- Property amenities
+* Using a button, a new listing on the server is created and visibly added to the dashboard (the Hosted Listings Screen) once all of the required fields have been filled out correctly.
 
 * A unique route must exist for this screen that is parameterised on the listing ID.
 * The user should be able to edit the following: 
