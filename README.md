@@ -19,7 +19,8 @@
 
 ### 1.1. Background & Motivation
 
-In October 2023, following the immense financial success of your messaging platform Slackr, you were invited to several tech talks and travelled all over the 
+##### In October 2023, following the immense financial success of your messaging platform Slackr, you were invited to several tech talks and travelled all over the 
+
 country. In your travels, you've had to endure several uncomfortable hotel stays. During these stays you've been struck with another brilliant startup idea for a person to person property renting service **AirBrB**. 
 
 You've contacted your developer friends and settled on functionality, feature set and a RESTful specification/interface for AirBrB. You've decided to outsource your back-end to another company and took on the task of building the front-end (optionally with another one of your friends). You wrote a list of requirements and functionalities your frontend should adhere to (described in section 2). You also decided to complete this application in ReactJS, a declarative framework for building single page applications. This front-end will interact with a Restful API that the team you've outsourced to are producing, based on the pre-defined interface.
@@ -62,31 +63,35 @@ The requirements describe a series of **screens**. Screens can be popups/modals,
 
 Please note: This assignment, unlike assignment 2, has a lot of functionality available whilst not logged in. Logging in just adds extra functionality. If you're unsure what we mean by this behaviour, you can play around with the Airbnb website for comparison.
 
-### 2.1. Feature Set 1. Admin Auth (10% for solo, 8% for pairs)
+### 2.1. Feature Set 1. Admin Auth (10% for solo, 8% for pairs) 
 
 This focuses on the basic user interface to register and log in to the site. Login and registration are required to gain access to making bookings as a guest, leave reviews and to manage your own listings as a host.
 
-#### 2.1.1. Login Screen
- * A unique route must exist for this screen
- * User must be able to enter their `email` and `password`.
- * If the form submission fails, a reasonable error message is shown
- * A button must exist to allow submission of form
+#### 2.1.1. Login Screen ✅
 
-#### 2.1.2. Register Screen
- * A unique route must exist for this screen
- * User must be able to enter their `email` and `password` and `name`
- * A confirm `password` field should exist where user re-enters their password.
- * If the two passwords don't match, the user should receive an error popup before submission.
- * If the form submission fails, a reasonable error message is shown
- * A button must exist to allow submission of form
+ * A unique route must exist for this screen ✅
+ * User must be able to enter their `email` and `password`.✅
+ * If the form submission fails, a reasonable error message is shown ✅
+ * A button must exist to allow submission of form ✅
 
-#### 2.1.3. Logout Button
- * A logout button, when clicked, returns you to the landing screen whilst being no longer logged in.
+#### 2.1.2. Register Screen ✅
+
+ * A unique route must exist for this screen✅
+ * User must be able to enter their `email` and `password` and `name` ✅
+ * A confirm `password` field should exist where user re-enters their password.✅
+ * If the two passwords don't match, the user should receive an error popup before submission. ✅
+ * If the form submission fails, a reasonable error message is shown ✅
+ * A button must exist to allow submission of form ✅
+
+#### 2.1.3. Logout Button ✅
+
+ * A logout button, when clicked, returns you to the landing screen whilst being no longer logged in. ✅
 
 #### 2.1.4. Items on all screens
+
  * On all screens, for a user who is logged in / authorised:
-   * The logout button exists somewhere
-   * A button exists that will take the user to the screen to view their hosted listings.
+   * The logout button exists somewhere ✅
+   * A button exists that will take the user to the screen to view their hosted listings. 
    * A button exists that will take the user to the screen to view all listings.
 
 ### 2.2. Feature Set 2. Creating & Editing & Publishing a Hosted Listing (16% for solo, 14% for pairs)
@@ -94,20 +99,21 @@ This focuses on the basic user interface to register and log in to the site. Log
 For logged in users, they are able to create their own listings (as a host) that will become visible to all other users who have the option of booking it.
 
 #### 2.2.1. Hosted Listings Screen
-* A unique route must exist for this screen
+* A unique route must exist for this screen ✅
 * A screen of all of YOUR listings (that you created) is displayed, where each listing shows the:
-	- Title
-	- Property Type
-	- Number of **beds** (not bedrooms)
-	- Number of bathrooms
-	- Thumbnail of the listing
-	- SVG rating of the listing (based on user ratings)
-	- Number of total reviews
-	- Price (per night)
+	- Title ✅
+	- Property Type ✅
+	- Number of **beds** (not bedrooms) ✅
+	- Number of bathrooms ✅
+	- Thumbnail of the listing ✅
+	- SVG rating of the listing (based on user ratings) 
+	- Number of total reviews  ✅
+	- Price (per night) ✅
 * Each listing should have a clickable element relating to it that takes you to the screen to edit that particular listing (`2.2.3`).
-* A button exists on this screen that allows you to delete a particular listing.
+* A button exists on this screen that allows you to delete a particular listing. ✅
 
-#### 2.2.2. Hosted Listing Create
+#### 2.2.2. Hosted Listing Create ✅
+
 * On the hosted listing screen (`2.2.1`) a button should exist that allows you to create a new listing. When you click on it, you are taken to another screen that requires you to provide the following details:
 	- Listing Title
 	- Listing Address
@@ -119,7 +125,6 @@ For logged in users, they are able to create their own listings (as a host) that
 	- Property amenities
 * Using a button, a new listing on the server is created and visibly added to the dashboard (the Hosted Listings Screen) once all of the required fields have been filled out correctly.
 
-#### 2.2.3. Edit AirBrB Listing
 * A unique route must exist for this screen that is parameterised on the listing ID.
 * The user should be able to edit the following: 
 	- Title
@@ -136,8 +141,9 @@ For logged in users, they are able to create their own listings (as a host) that
 #### 2.2.4. Publishing a listing
  * For a listing to "go live" means that the listing becomes visible to other AirBrB users on the screen described in ``2.4``.
  * On the hosted listings screen described in ``2.2.1``, add the ability to make an individual listing "go live".
+
  	- A listing must have at least one availability date range (e.g. a listing could be available between 1st and 3rd of November and then between the 5th and 6th of November). 
-	- The way you define the availability ranges is entirely up to you. For example, you could use the following schemas:
+ 	- The way you define the availability ranges is entirely up to you. For example, you could use the following schemas:
 ```javascript
 //Example 1:
 availability: [{ start: date1, end: date2 }, { start: date3, end: date4 }, ...];
@@ -163,6 +169,7 @@ When the app loads, regardless of whether a user is logged in or not, they can a
   * All remaining listings should be displayed in alphabetical order of title.
 
 #### 2.3.2. Search Filters
+
 * On this listings screen, a search section must exist for the user to filter via search parameters. You are only required to be able to search by one of the parameters described below at a time.
 * The search section will consists of an input text box:
   * The input text box will take in a search string, and will search title and city location properties of listings, and only display those that match.
@@ -180,6 +187,7 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 ### 2.4. Feature Set 4. Viewing and Booking Listings (9% for solo, 8% for pairs)
 
 #### 2.4.1. View a Selected Listing
+
  * A unique route must exist for this screen that is parameterised on the Listing ID
  * For `2.3`, when a listing is clicked on, this screen should appear and display information about a specific listing.
  * On this screen the user is given the listing they have decided to view in 2.4.1. This consists of:
@@ -217,6 +225,7 @@ When the app loads, regardless of whether a user is logged in or not, they can a
  * Once un-published, those who had made bookings for a removed listing will no longer be able to view it on their landing screen
 
 #### 2.5.2. Viewing booking requests and history for a hosted listing
+
  * A unique route must exist for this screen that is parameterised on the listing ID
  * This screen should be accessed via a button or link on the hosted listings screen `2.2.1`.
  * On this screen, a list of booking requests are provided for the listing they are viewing. For each booking request, the host is able to accept/deny it.
@@ -505,7 +514,7 @@ knowledge.
 This assignment is due *Friday 17th November, 10pm*.
 
 To submit your assignment, you must you've pushed all of your code to your gitlab master branch. You can check if you've done this properly by seeing what code is on the gitlab site on your master branch.
- 
+
 We will collect the latest work on your master branch of gitlab at the time of submission.
 
 It is your responsibiltiy to ensure that your code can run successfully when cloned fresh from Gitlab.
