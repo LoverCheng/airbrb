@@ -100,6 +100,7 @@ const AddNew = () => {
         bedrooms: listing.bedrooms,
         amenities: listing.amenities,
         propertyType: listing.propertyType,
+        rates: [],
       }
     }
     const cleanedData = stripWhitespace({ ...originalData });

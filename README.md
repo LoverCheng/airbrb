@@ -98,18 +98,18 @@ This focuses on the basic user interface to register and log in to the site. Log
 For logged in users, they are able to create their own listings (as a host) that will become visible to all other users who have the option of booking it.
 
 #### 2.2.1. Hosted Listings Screen
-* A unique route must exist for this screen
+* A unique route must exist for this screen ✅
 * A screen of all of YOUR listings (that you created) is displayed, where each listing shows the:
-	- Title
-	- Property Type
-	- Number of **beds** (not bedrooms)
-	- Number of bathrooms
-	- Thumbnail of the listing
-	- SVG rating of the listing (based on user ratings)
-	- Number of total reviews
-	- Price (per night)
+	- Title ✅
+	- Property Type ✅
+	- Number of **beds** (not bedrooms) ✅
+	- Number of bathrooms ✅
+	- Thumbnail of the listing ✅
+	- SVG rating of the listing (based on user ratings) 
+	- Number of total reviews  ✅
+	- Price (per night) ✅
 * Each listing should have a clickable element relating to it that takes you to the screen to edit that particular listing (`2.2.3`).
-* A button exists on this screen that allows you to delete a particular listing.
+* A button exists on this screen that allows you to delete a particular listing. ✅
 
 #### 2.2.2. Hosted Listing Create ✅
 
@@ -226,6 +226,7 @@ When the app loads, regardless of whether a user is logged in or not, they can a
  * Once un-published, those who had made bookings for a removed listing will no longer be able to view it on their landing screen
 
 #### 2.5.2. Viewing booking requests and history for a hosted listing
+
  * A unique route must exist for this screen that is parameterised on the listing ID
  * This screen should be accessed via a button or link on the hosted listings screen `2.2.1`.
  * On this screen, a list of booking requests are provided for the listing they are viewing. For each booking request, the host is able to accept/deny it.
