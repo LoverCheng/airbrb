@@ -125,22 +125,23 @@ For logged in users, they are able to create their own listings (as a host) that
 	- Property amenities ✅
 * Using a button, a new listing on the server is created and visibly added to the dashboard (the Hosted Listings Screen) once all of the required fields have been filled out correctly.
 
-* A unique route must exist for this screen that is parameterised on the listing ID. 
+* A unique route must exist for this screen that is parameterized on the listing ID. ✅
 * The user should be able to edit the following: 
-	- Title 👀
-	- Address 👀
-	- Thumbnail 👀
-	- Price (per night) 👀
-	- Type 👀
-	- Number of bathrooms 👀
-	- Bedrooms (incorporate editing of beds as part of bedrooms) 👀
-	- Amenities 👀
-	- List of property images 👀
-* Updates can auto-save, or a save button can exist that saves the updates and returns you to the hosted listings screen.
+	- Title ✅
+	- Address ✅
+	- Thumbnail ✅
+	- Price (per night) ✅
+	- Type ✅
+	- Number of bathrooms ✅
+	- Bedrooms (incorporate editing of beds as part of bedrooms) ✅
+	- Amenities ✅
+	- List of property images ✅
+* Updates can auto-save, or a save button can exist that saves the updates and returns you to the hosted listings screen. ✅
 
 #### 2.2.4. Publishing a listing
- * For a listing to "go live" means that the listing becomes visible to other AirBrB users on the screen described in ``2.4``.
- * On the hosted listings screen described in ``2.2.1``, add the ability to make an individual listing "go live".
+
+ * For a listing to "go live" means that the listing becomes visible to other AirBrB users on the screen described in ``2.4``. 
+ * On the hosted listings screen described in ``2.2.1``, add the ability to make an individual listing "go live". 
 
  	- A listing must have at least one availability date range (e.g. a listing could be available between 1st and 3rd of November and then between the 5th and 6th of November). 
  	- The way you define the availability ranges is entirely up to you. For example, you could use the following schemas:
@@ -150,53 +151,54 @@ availability: [{ start: date1, end: date2 }, { start: date3, end: date4 }, ...];
 //Example 2:
 availability: [date1, date2, date3, date4, ...];
 ```
-* (Note: If the listing has more than 1 availability range, aggregate them on the frontend and submit them all to the backend in one go when publishing the listing).
+* (Note: If the listing has more than 1 availability range, aggregate them on the frontend and submit them all to the backend in one go when publishing the listing). ✅
 
 ### 2.3. Feature Set 3. Landing Page: Listings and Search (16% for solo, 14% for pairs)
 
 When the app loads, regardless of whether a user is logged in or not, they can access the landing screen. The landing screen displays a number of listings that you as a guest may be able to book (on another screen). We recommend you create some listings (`2.2`) with one user account, and then create a second user account to build/test `2.3` so that you can view their listing as a potential booking option.
 
 #### 2.3.1. Listings Screen
-* A unique route must exist for this screen.
-* This is the default screen that is loaded when a user accesses the root URL.
-* This screen displays a list of all published listings (rows or thumbnails). The information displayed in each listing is:
-  * Title
-  * Thumbnail of property (or video if advanced)
-  * Number of total reviews
-  * (any more information you want, though that's optional).
+
+* A unique route must exist for this screen.✅
+* This is the default screen that is loaded when a user accesses the root URL.✅
+* This screen displays a list of all published listings (rows or thumbnails). The information displayed in each listing is: 
+  * Title  ✅
+  * Thumbnail of property (or video if advanced)  ✅
+  * Number of total reviews 
+  * (any more information you want, though that's optional).  ✅
 * In terms of ordering of displayed published listings:
-  * Listings that involve bookings made by the customer with status `accepted` or `pending` should appear first in the list (if the user is logged in).
-  * All remaining listings should be displayed in alphabetical order of title.
+  * Listings that involve bookings made by the customer with status  `accepted` or `pending` should appear first in the list (if the user is logged in). 
+  * All remaining listings should be displayed in alphabetical order of title. ✅
 
 #### 2.3.2. Search Filters
 
 * On this listings screen, a search section must exist for the user to filter via search parameters. You are only required to be able to search by one of the parameters described below at a time.
-* The search section will consists of an input text box:
-  * The input text box will take in a search string, and will search title and city location properties of listings, and only display those that match.
-  * You are expected to do this matching on frontend (after loading all the results from the backend).
-  * You are only required to do case insensitive substring matching (of each word in the search field), nothing more complicated. 
+* The search section will consists of an input text box: ✅
+  * The input text box will take in a search string, and will search title and city location properties of listings, and only display those that match. ✅
+  * You are expected to do this matching on frontend (after loading all the results from the backend). ✅
+  * You are only required to do case-insensitive substring matching (of each word in the search field), nothing more complicated. ✅
 * Other form inputs should also exist that allow the user to search by:
-	* Number of bedrooms (a minimum and maximum number of bedrooms, expressed either via text fields or a slider)
-	* Date range (two date fields) - only display bookings that are available for the entire date range as inputted by the user.
-	* Price (a minimum and maximum price, expressed either via text fields or a slider)
+	* Number of bedrooms (a minimum and maximum number of bedrooms, expressed either via text fields or a slider) ✅
+	* Date range (two date fields) - only display bookings that are available for the entire date range as inputted by the user. ✅
+	* Price (a minimum and maximum price, expressed either via text fields or a slider) ✅
 	* Review ratings:
-		- Sort results from highest to lowest review rating **or** from lowest to highest review rating depending
-		- If there is more than one listing with the same rating, their order does not matter
-* The search section must have an associated search button that will action the search to reload the results given the new filters.
+		- Sort results from highest to lowest review rating **or** from lowest to highest review rating depending 
+		- If there is more than one listing with the same rating, their order does not matter 
+* The search section must have an associated search button that will action the search to reload the results given the new filters.✅
 
 ### 2.4. Feature Set 4. Viewing and Booking Listings (9% for solo, 8% for pairs)
 
 #### 2.4.1. View a Selected Listing
 
- * A unique route must exist for this screen that is parameterised on the Listing ID
+ * A unique route must exist for this screen that is parameterized on the Listing ID
  * For `2.3`, when a listing is clicked on, this screen should appear and display information about a specific listing.
  * On this screen the user is given the listing they have decided to view in 2.4.1. This consists of:
 	- Title
 	- Address (displayed as a string, e.g. 1/101 Kensington Street, Kensington, NSW)
 	- Amenities
 	- Price:
-		- If the user used a date range for search in `2.3.2` - display **price per stay**
-		- If the user did not use a date range for search in `2.3.2` - display **price per night**
+		- If the user used a date range for search in `2.3.2` - display **price per stay **
+		- If the user did not use a date range for search in `2.3.2` - display **price per night** 
 	- All images of the property including the listing thumbnail (they don't have to be visible all at once)
 	- Type
 	- Reviews
@@ -481,7 +483,6 @@ Your assignment will be hand-marked by tutor(s) in the course according to the c
 		</td>
 	</tr>
 </table>
-
 ## 7. Originality of Work
 
 The work you submit must be your own work.  Submission of work partially or completely derived from

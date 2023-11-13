@@ -1,3 +1,9 @@
+/**
+ * @fileOverview Bedroom component
+ * @author <Jason>
+ * @version 1.0.0
+ * @abstract Component for the bedroom number and bed type
+ */
 import React from 'react';
 import { Button, TextField, IconButton, Grid } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';

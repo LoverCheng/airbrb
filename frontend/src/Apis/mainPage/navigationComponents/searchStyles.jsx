@@ -29,7 +29,7 @@ export const Search = styled('div')(({ theme }) => ({
      * theme.spacing(3), it calculates the value as 8 * 3
      */
     marginLeft: theme.spacing(3),
-    width: 'auto',
+    width: '50%',
   },
 }));
 
@@ -48,7 +48,10 @@ export const SearchIconWrapper = styled('div')(({ theme }) => ({
    * mouse events like click, hover, etc.
    * Events will be "passed through" to elements underneath.
    */
-  pointerEvents: 'none',
+  pointerEvents: 'auto',
+  '&:hover': {
+    cursor: 'pointer', // Change cursor to pointer on hover
+  },
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

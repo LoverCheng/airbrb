@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import MainPage from './Apis/mainPage/MainPage';
 import { ModalWrapper } from './Apis/adminAuth/modals';
-import AddNew from './Apis/listings/addNew';
+import ListingForm from './Apis/listings/ListingForm';
 import ListingsHosted from './Apis/listings/ListingsHosted';
+import ListingPush from './Apis/listings/ListingPush';
 
 const EmptyComponent = () => null;
 
@@ -26,9 +27,10 @@ const App = () => {
           <Route path="login" element={<EmptyComponent/>}/>
           <Route path="signUp" element={<EmptyComponent/>}/>
         </Route>
-        <Route path="/listings/new" element={<AddNew/>}/>
+        <Route path="/listings/new" element={<ListingForm/>}/>
         <Route path="/listings/hosted" element={<ListingsHosted/>}/>
-        <Route path="/listings/update" element={<AddNew/>}/>
+        <Route path="/listings/update" element={<ListingForm/>}/>
+        <Route path="/listings/push" element={<ListingPush/>}/>
       </Routes>
     </Router>
   );

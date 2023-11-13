@@ -1,6 +1,6 @@
 import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar';
-import { React, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { React, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Container,
   Typography,
@@ -24,9 +24,10 @@ import { BedroomContext } from './bedroomContext';
 import { fileToDataUrl } from '../../utils/fileToDataUrl';
 import http from '../../utils/http';
 import stripWhitespace from '../../utils/cleanData';
-import HintModal from '../../utils/hintModal';
+import HintModal from '../../utils/modals/hintModal';
+// import { title } from 'process';
 
-const AddNew = () => {
+const ListingForm = () => {
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -52,13 +53,76 @@ const AddNew = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [hintMessage, setHintMessage] = useState('');
   const navigate = useNavigate();
-  // initialize the bedrooms as none { beds: '0', bedType: '' }
+  // initialize the bedrooms as none
+  // template:{ beds: '0', bedType: '' }
   const [bedrooms, setBedrooms] = useState([]);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [imagePreview, setImagePreview] = useState('');
   const [imagePreviews, setImagePreviews] = useState([]);
   const [contextMenu, setContextMenu] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const location = useLocation();
+  const cardData = location.state;
+
+  // useEffect to update the listing info when the cardData is not null
+  // prevent infinite re-renders
+  useEffect(() => {
+    // if the pathname is not /listings/update, reset the form data
+    if (location.pathname === '/listings/new') {
+      // Reset the form data
+      setListing({
+        title: '',
+        address: {
+          street: '',
+          city: '',
+          state: '',
+          postcode: '',
+          country: '',
+        },
+        price: '',
+        thumbnail: '',
+        propertyType: '',
+        bathrooms: '',
+        bedrooms: [],
+        amenities: '',
+      });
+      setImagePreview('');
+      setCity('');
+      setStreet('');
+      setState('');
+      setPostcode('');
+      setCountry('');
+      setBedrooms([]);
+      setImagePreviews([]);
+      setButtonClicked(false);
+    }
+    if (cardData) {
+      console.log('start to update the listing info');
+      setListing(prevListing => ({
+        ...prevListing,
+        title: cardData.title,
+        price: cardData.price,
+        thumbnail: cardData.thumbnail,
+        propertyType: cardData.metadata.propertyType,
+        bathrooms: cardData.metadata.bathrooms,
+        amenities: cardData.metadata.amenities,
+      }));
+
+      setImagePreview(cardData.thumbnail);
+      setCity(cardData.address.city);
+      listing.address.city = cardData.address.city;
+      setStreet(cardData.address.street);
+      listing.address.street = cardData.address.street;
+      setState(cardData.address.state);
+      listing.address.state = cardData.address.state;
+      setPostcode(cardData.address.postcode);
+      listing.address.postcode = cardData.address.postcode;
+      setCountry(cardData.address.country);
+      listing.address.country = cardData.address.country;
+      setBedrooms(cardData.metadata.bedrooms);
+      setImagePreviews(cardData.metadata.images);
+    }
+  }, [location.pathname, cardData]); // Dependency array
 
   const handleChange = (event) => {
     // use the value of `event.target.name` as the property name
@@ -72,7 +136,8 @@ const AddNew = () => {
   }
 
   const handleClose = () => {
-    navigate('/'); // Navigate to the root URL
+    // navigate to /listings/hosted
+    navigate('/listings/hosted');
   };
   const handleOpenModal = (message) => {
     setHintMessage(message);
@@ -83,8 +148,7 @@ const AddNew = () => {
     setModalOpen(false);
   };
 
-  // Function to send data to backend
-  const handleSubmit = () => {
+  const cleanData = (data) => {
     setButtonClicked(true);
     const originalData = {
       title: listing.title,
@@ -133,20 +197,53 @@ const AddNew = () => {
       amenities: cleanedData.metadata.amenities,
       images: cleanedData.metadata.images,
     }));
-    if (isInvalid) {
+    if (!isInvalid) {
+      return cleanedData;
+    }
+  }
+
+  // Function to send data to backend
+  const handleSubmit = () => {
+    // clean the data
+    const cleanedData = cleanData(listing);
+    if (!cleanedData) {
+      console.log('Failed to add new listing');
       return;
     }
-    console.log(cleanedData);
-
     http.post('listings/new', cleanedData).then((res) => {
       if (!res.error) {
         console.log('Successfully added new listing');
-        navigate('/');
+        navigate('/listings/hosted');
       } else {
         console.log(res);
         // remember to pass a string into handleOpenModal
         handleOpenModal(res.error);
         console.log('Failed to add new listing');
+      }
+    });
+  };
+
+  // Function to update data to backend
+  const handleUpdate = () => {
+    // clean the data
+    console.log(listing);
+    // console.log(cardData);
+    console.log(cardData.address.city);
+    const cleanedData = cleanData(listing);
+    if (!cleanedData) {
+      console.log(cleanedData);
+      console.log('Failed to update listing');
+      return;
+    }
+    http.put(`listings/${cardData.id}`, cleanedData).then((res) => {
+      if (!res.error) {
+        console.log('Successfully updated listing');
+        navigate('/listings/hosted');
+      } else {
+        console.log(res);
+        // remember to pass a string into handleOpenModal
+        handleOpenModal(res.error);
+        console.log('Failed to update listing');
       }
     });
   };
@@ -204,6 +301,7 @@ const AddNew = () => {
   };
 
   const handleCloseContextMenu = () => {
+    console.log('enter');
     setContextMenu(null);
   };
 
@@ -374,7 +472,7 @@ const AddNew = () => {
         />
 
         <TextField
-          label="Price"
+          label="Price per night"
           variant="outlined"
           fullWidth
           name="price"
@@ -534,9 +632,27 @@ const AddNew = () => {
 
         <Container maxWidth="sm">
           <Box display="flex" justifyContent="space-between">
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
-              Submit Listing
-            </Button>
+            {
+              cardData
+                ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleUpdate}
+                  >
+                    Update Listing
+                  </Button>
+                  )
+                : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
+                    Submit Listing
+                  </Button>
+                  )
+            }
             <Button
               variant="contained"
               color="primary"
@@ -547,6 +663,7 @@ const AddNew = () => {
           </Box>
         </Container>
       </Container>
+
       <HintModal
         open={modalOpen}
         handleClose={handleCloseModal}
@@ -556,4 +673,4 @@ const AddNew = () => {
   );
 }
 
-export default AddNew;
+export default ListingForm;

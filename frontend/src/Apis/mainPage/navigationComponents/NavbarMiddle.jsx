@@ -5,16 +5,18 @@
 import React from 'react';
 import { AppBar, Toolbar, Box, IconButton } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 import { Search, SearchIconWrapper } from './searchStyles';
-import { StyledInputBase } from './InputComponent';
+import { StyledInputBase } from './StyledInput';
 import { Context, useContext } from './navContext';
 import { useTheme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import styled from 'styled-components';
+
 // import logo from file but not use fetch
 import logo from '../../../assets/Airbnb_Logo_Bélo.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import searchContext from '../../searchFilter/searchContext';
 
 const StyledIconSymbol = styled.img`
   width: 100px;
@@ -23,6 +25,12 @@ const StyledIconSymbol = styled.img`
   // changes the cursor to a pointer
   cursor: pointer;
 `;
+
+const useStyle = makeStyles({
+  input: {
+    width: '90%',
+  }
+});
 
 function SvgIconSymbol (props) {
   const theme = useTheme();
@@ -38,6 +46,12 @@ function SvgIconSymbol (props) {
 const Navbar = () => {
   const { getters, setters } = useContext(Context);
   const navigate = useNavigate();
+  const location = useLocation();
+  const classes = useStyle();
+  let searchGetters, searchSetters;
+  if (location.pathname === '/') {
+    ({ searchGetters, searchSetters } = useContext(searchContext));
+  }
 
   const handleIconLogoClick = () => {
     navigate('/');
@@ -62,16 +76,35 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 2, display: 'flex', justifyContent: 'center' }}>
             <Search>
               <SearchIconWrapper>
-                <SearchIcon />
+                <SearchIcon sx={{
+                  '&:hover': {
+                    cursor: 'pointer' // Cursor when hovering
+                  }
+                }}
+                onClick= {
+                  location.pathname === '/'
+                    ? searchSetters.handleSearchClick
+                    : undefined
+                }/>
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder='Search…'
+                placeholder='Any title | Any city'
                 inputProps={{ 'aria-label': 'search' }}
+                // make the input field full width
+                className={classes.input}
+                value={ location.pathname !== '/'
+                  ? searchGetters
+                  : searchGetters.basicSearchValue
+                }
+                onChange={(event) => {
+                  location.pathname === '/' &&
+                  searchSetters.setBasicSearchValue(event.target.value);
+                }}
               />
             </Search>
           </Box>
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: 'flex' }}>
             <IconButton
               size='large'
               edge='end'
@@ -82,20 +115,6 @@ const Navbar = () => {
               color='inherit'
             >
               <AccountCircle color='action' />
-            </IconButton>
-          </Box>
-
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size='large'
-              aria-label='show more'
-              aria-controls={getters.mobileMenuId}
-              aria-haspopup='true'
-              onClick={setters.handleMobileMenuOpen}
-              color='inherit'
-              // sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-              <MoreIcon />
             </IconButton>
           </Box>
         </Toolbar>

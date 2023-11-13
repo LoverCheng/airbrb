@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react';
-
-// import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-// import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-// import Collapse from '@mui/material/Collapse';
-// import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-// import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ShareIcon from '@mui/icons-material/Share';
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Box from '@mui/material/Box';
 import styled from 'styled-components';
-import { Grid } from '@mui/material';
+
+import {
+  Rating,
+  Box,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  IconButton,
+  Typography
+} from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 import PrimarySearchAppBar from './navigationComponents/navigationBar';
-import http from '../../utils/http';
+import fetchAllListingsAndDetailsSequentially from '../../utils/fetchListingsDetails';
+import UnderLinedText from '../listings/components/styledUnderlinedText';
+import WelcomeTitle from '../listings/components/welcomeTitleComponent';
+import searchContext from '../searchFilter/searchContext';
+import FilterModal from '../searchFilter/searchFilterModal';
+// import http from '../../utils/http';
 
 const FavoriteIconButton = styled(IconButton)({
   position: 'absolute',
@@ -55,144 +56,273 @@ const StyledGridItem = styled(Grid)(({ theme }) => ({
 }));
 
 const MainPage = () => {
-  const [listings, setListings] = useState([]);
+  const ratingValue = 4;
+  const [detailedListings, setDetailedListings] = useState([]);
+  const [filteredSearch, setFilteredSearch] = useState(false);
+  const [searchValueAtSearch, setSearchValueAtSearch] = useState('');
+  const [basicSearchValue, setBasicSearchValue] = React.useState('');
+  const [dateRange, setDateRange] = useState(
+    { startDate: null, endDate: null },
+  );
+  const [priceRange, setPriceRange] = useState(
+    { minPrice: '', maxPrice: '' },
+  );
+  const [bedroomRange, setBedroomRange] = useState(
+    { minBedrooms: '', maxBedrooms: '' },
+  );
   const handleFavoriteClick = (id) => {
     // Handle the click event for the favorite icon
     console.log('Favorite clicked for listing:', id);
   };
 
   useEffect(() => {
-    // Define an async function inside the effect
-    const fetchListings = async () => {
-      try {
-        // Await the HTTP get request
-        const response = await http.get('listings');
-        // Set the listings in state
-        setListings(response.listings);
-        // console.log(response);
-        // console.log(listings);
-        // console.log(typeof response.listings);
-      } catch (error) {
-        // If there's an error, log it
-        console.error('Failed to fetch listings:', error);
-      }
-    };
-
-    // Call the async function
-    fetchListings();
+    fetchAllListingsAndDetailsSequentially(setDetailedListings);
   }, []); // Empty dependency array means this effect runs once on mount
+
+  // const filterListings = (listings, searchValue, filters) => {
+  //   const lowerCaseSearchValue = searchValue.toLowerCase();
+  //   // if (lowerCaseSearchValue.trim() === '') return listings;
+  //   // return listings.filter(listing =>
+  //   //   listing.title.toLowerCase().includes(lowerCaseSearchValue) ||
+  //   //   listing.address.city.toLowerCase().includes(lowerCaseSearchValue)
+  //   // )
+  //   return listings.filter(listing => {
+  //     // Text search filter
+  //     const matchesSearch = lowerCaseSearchValue.trim() === '' ||
+  //                           listing.title.toLowerCase().includes(lowerCaseSearchValue) ||
+  //                           listing.address.city.toLowerCase().includes(lowerCaseSearchValue);
+
+  //     // Date range filter
+  //     // const matchesDate = (!filters.startDate || new Date(listing.startDate) >= new Date(filters.startDate)) &&
+  //     //                     (!filters.endDate || new Date(listing.endDate) <= new Date(filters.endDate));
+  //     // listing.some((availability) => {
+  //     //   const matchesDate = (!filters.startDate || new Date(availability.startDate) >= new Date(filters.startDate)) &&
+  //     //                       (!filters.endDate || new Date(availability.endDate) <= new Date(filters.endDate));
+  //     //   return matchesDate;
+  //     // }
+  //     // );
+
+  //     // !Price range filter
+  //     const matchesPrice = (filters.minPrice === '' ||
+  //                             parseInt(listing.price) >= parseInt(filters.minPrice)) &&
+  //                          (filters.maxPrice === '' ||
+  //                             parseInt(listing.price) <= parseInt(filters.maxPrice));
+
+  //     // !Bedrooms filter
+  //     const matchesBedrooms =
+  //       (filters.minBedrooms === '' ||
+  //          listing.metadata.bedrooms.length >= filters.minBedrooms) &&
+  //       (filters.maxBedrooms === '' ||
+  //         listing.metadata.bedrooms.length <= filters.maxBedrooms);
+
+  //     return (
+  //       matchesSearch &&
+  //       // matchesDate &&
+  //       matchesPrice &&
+  //       matchesBedrooms);
+  //   });
+  // }
+
+  // const sortListingsByTitle = (listings) => {
+  //   return listings.sort((a, b) => a.title.localeCompare(b.title));
+  // };
+
+  // store the current search value in searchValueAtSearch
+  // const filteredListings = filteredSearch
+  //   //  sort the filtered listings by title in alphabetical order
+  //   ? sortListingsByTitle(filterListings(detailedListings, searchValueAtSearch))
+  //   : sortListingsByTitle(detailedListings);
+
+  const filterListings = (listings, searchValue, filters) => {
+    const lowerCaseSearchValue = searchValue.toLowerCase();
+
+    return listings.filter(listing => {
+      console.log('enter filterListings');
+      // Text search filter
+      const matchesSearch = lowerCaseSearchValue.trim() === '' ||
+                            listing.title.toLowerCase().includes(lowerCaseSearchValue) ||
+                            listing.address.city.toLowerCase().includes(lowerCaseSearchValue);
+
+      // Availability filter
+      const filterStartDate = filters.startDate ? new Date(filters.startDate) : null;
+      const filterEndDate = filters.endDate ? new Date(filters.endDate) : null;
+      const matchesAvailability = listing.availability.some(availability => {
+        const listingStartDate = new Date(availability.startDate);
+        const listingEndDate = new Date(availability.endDate);
+
+        return (!filterStartDate || listingEndDate >= filterStartDate) &&
+               (!filterEndDate || listingStartDate <= filterEndDate);
+      });
+
+      // Price range filter
+      const listingPrice = parseInt(listing.price, 10);
+      const minPrice = filters.minPrice ? parseInt(filters.minPrice, 10) : null;
+      const maxPrice = filters.maxPrice ? parseInt(filters.maxPrice, 10) : null;
+      const matchesPrice = (minPrice === null || listingPrice >= minPrice) &&
+                           (maxPrice === null || listingPrice <= maxPrice);
+
+      // Bedrooms filter
+      const listingBedrooms = listing.metadata.bedrooms.length;
+      const minBedrooms = filters.minBedrooms ? parseInt(filters.minBedrooms, 10) : null;
+      const maxBedrooms = filters.maxBedrooms ? parseInt(filters.maxBedrooms, 10) : null;
+      const matchesBedrooms = (minBedrooms === null || listingBedrooms >= minBedrooms) &&
+                              (maxBedrooms === null || listingBedrooms <= maxBedrooms);
+
+      return matchesSearch && matchesAvailability && matchesPrice && matchesBedrooms;
+    });
+  }
+
+  const filteredListings = filteredSearch
+    ? filterListings(detailedListings,
+      searchValueAtSearch,
+      {
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+        minPrice: priceRange.minPrice,
+        maxPrice: priceRange.maxPrice,
+        minBedrooms: bedroomRange.minBedrooms,
+        maxBedrooms: bedroomRange.maxBedrooms
+      })
+    : detailedListings;
+
+  const handleSearchClick = (event) => {
+    event.preventDefault();
+    setSearchValueAtSearch(basicSearchValue);
+    // Trigger the filtering logic here
+    setFilteredSearch(true); // This will indicate that a search has been performed
+    console.log('search icon clicked');
+  };
+
+  const searchGetters = {
+    basicSearchValue,
+    dateRange,
+    priceRange,
+    bedroomRange
+  }
+
+  const searchSetters = {
+    setBasicSearchValue,
+    handleSearchClick,
+    setDateRange,
+    setPriceRange,
+    setBedroomRange
+  }
 
   return (
     <>
-      <PrimarySearchAppBar />
-      <Box sx={{ padding: '20px', display: 'flex' }}>
-
-        <StyledGridContainer spacing={{ xs: 2, sm: 3, md: 4 }}>
-          <StyledGridItem item xs={12} sm={6} md={4} lg={3}>
-            <ThumbnailCard>
-              <CardMedia
-                component="img"
-                height="194"
-                image="https://mui.com/static/images/cards/paella.jpg"
-                alt="Paella dish"
-                sx= {{ position: 'relative' }}
-              />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  This impressive paella is a perfect party dish and a fun meal to cook
-                  together with your guests. Add 1 cup of frozen peas along with the mussels,
-                  if you like.
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <FavoriteIconButton
-                  aria-label="add to favorites"
-                  onClick={handleFavoriteClick}
-                >
-                  <FavoriteIcon />
-                </FavoriteIconButton>
-              </CardActions>
-            </ThumbnailCard>
-          </StyledGridItem>
-
-          <StyledGridItem item xs={12} sm={6} md={4} lg={3}>
-            <ThumbnailCard>
-              <CardMedia
-                component="img"
-                height="194"
-                image="https://mui.com/static/images/cards/paella.jpg"
-                alt="Paella dish"
-              />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  This impressive paella is a perfect party dish and a fun meal to cook
-                  together with your guests. Add 1 cup of frozen peas along with the mussels,
-                  if you like.
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <FavoriteIconButton
-                  aria-label="add to favorites"
-                  onClick={handleFavoriteClick}
-                >
-                  <FavoriteIcon />
-                </FavoriteIconButton>
-              </CardActions>
-            </ThumbnailCard>
-          </StyledGridItem>
-
-          <StyledGridItem item xs={12} sm={6} md={4} lg={3}>
-            <ThumbnailCard>
-              <CardMedia
-                component="img"
-                height="194"
-                image="https://mui.com/static/images/cards/paella.jpg"
-                alt="Paella dish"
-              />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  This impressive paella is a perfect party dish and a fun meal to cook
-                  together with your guests. Add 1 cup of frozen peas along with the mussels,
-                  if you like.
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <FavoriteIconButton
-                  aria-label="add to favorites"
-                  onClick={handleFavoriteClick}
-                >
-                  <FavoriteIcon />
-                </FavoriteIconButton>
-              </CardActions>
-            </ThumbnailCard>
-          </StyledGridItem>
-          {listings.map((listing) => (
-            <StyledGridItem key={listing.id} item xs={12} sm={6} md={4} lg={3}>
-              <ThumbnailCard>
-                <CardMedia
-                  component="img"
-                  height="194"
-                  image={listing.thumbnail} // Assuming this is a URL to the image
-                  alt={listing.title}
-                />
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    {`${listing.address.street}, ${listing.address.city}, ${listing.address.state}, ${listing.address.postcode}, ${listing.address.country}`}
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <FavoriteIconButton
-                    aria-label="add to favorites"
-                    onClick={() => handleFavoriteClick(listing.id)}
+      <searchContext.Provider value={{ searchGetters, searchSetters }}>
+        <PrimarySearchAppBar />
+        <FilterModal/>
+        <Box sx={{ padding: '2% 5%' }}>
+            <WelcomeTitle/>
+            <Box sx={{ padding: '20px', display: 'flex' }}>
+            <StyledGridContainer spacing={{ xs: 2, sm: 3, md: 4 }}>
+              <StyledGridItem item xs={12} sm={6} md={4} lg={3}>
+                <ThumbnailCard>
+                  <CardMedia
+                    component="img"
+                    height="194"
+                    image="https://mui.com/static/images/cards/paella.jpg"
+                    alt="Paella dish"
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      This impressive paella is a perfect party dish and a fun meal to cook
+                      together with your guests. Add 1 cup of frozen peas along with the mussels,
+                      if you like.
+                    </Typography>
+                  </CardContent>
+                  <CardActions disableSpacing>
+                    <FavoriteIconButton
+                      aria-label="add to favorites"
+                      onClick={handleFavoriteClick}
+                    >
+                      <FavoriteIcon />
+                    </FavoriteIconButton>
+                  </CardActions>
+                </ThumbnailCard>
+              </StyledGridItem>
+              {filteredListings.map((listing) => (
+                // check if listing is published
+                listing.published && (
+                  <StyledGridItem
+                    key={listing.id}
+                    item xs={12}
+                    sm={6}
+                    md={4}
+                    lg={3}
                   >
-                    <FavoriteIcon/>
-                  </FavoriteIconButton>
-                </CardActions>
-              </ThumbnailCard>
-            </StyledGridItem>
-          ))}
-        </StyledGridContainer>
-      </Box>
+                    <ThumbnailCard
+                      sx={{
+                        cursor: 'pointer',
+                        userSelect: 'none',
+                      }}
+                      // onClick={() => handleCardClick(listing)}
+                    >
+                      <CardMedia
+                        component="img"
+                        height="194"
+                        image={listing.thumbnail} // Assuming this is a URL to the image
+                        alt={listing.title}
+                      />
+                      <CardContent>
+                        <Rating
+                          name="controlled-rating"
+                          value={ratingValue}
+                          readOnly
+                          emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                        />
+                        <Typography
+                          variant="body2"
+                          sx={{ fontWeight: 'bold' }}
+                        >
+                          {`${listing.title}`}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {`🚪: ${listing.metadata.bedrooms.length}`}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {`🛌: 
+                            ${listing.metadata.bedrooms.reduce(
+                              (acc, cur) => parseInt(acc) + parseInt(cur.beds), 0
+                              )
+                            }`
+                          }
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {`🏡: ${listing.address.street}, 
+                              ${listing.address.city}, 
+                              ${listing.address.state}, 
+                              ${listing.address.postcode}, 
+                              ${listing.address.country}`}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {`Property Type: ${listing.metadata.propertyType}`}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {`💬  ${listing.reviews.length}`}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary"></Typography>
+                        <UnderLinedText sx={{ fontWeight: 'bold' }}>
+                          {`💰💲${listing.price} per day`}
+                        </UnderLinedText>
+                      </CardContent>
+                      {/* <CardActions disableSpacing>
+                        <FavoriteIconButton
+                          aria-label="add to favorites"
+                          onClick={() => handleFavoriteClick(listing.id)}
+                        >
+                          <FavoriteIcon/>
+                        </FavoriteIconButton>
+                      </CardActions> */}
+                    </ThumbnailCard>
+                  </StyledGridItem>
+                )
+              ))}
+            </StyledGridContainer>
+          </Box>
+        </Box>
+      </searchContext.Provider>
     </>
   );
 };
