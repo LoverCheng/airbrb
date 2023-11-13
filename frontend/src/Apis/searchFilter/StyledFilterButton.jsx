@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 
 const StyledFilterButton = styled(Button)({
   position: 'absolute',
-  top: '10%',
+  top: '11%',
   right: '0.5%',
   color: 'black',
   borderColor: 'lightgray',

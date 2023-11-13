@@ -14,11 +14,12 @@ import {
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useNavigate } from 'react-router-dom';
 
 import PrimarySearchAppBar from './navigationComponents/navigationBar';
 import fetchAllListingsAndDetailsSequentially from '../../utils/fetchListingsDetails';
-import UnderLinedText from '../listings/components/styledUnderlinedText';
-import WelcomeTitle from '../listings/components/welcomeTitleComponent';
+import UnderLinedText from '../../utils/globalComponents/styledUnderlinedText';
+import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent';
 import searchContext from '../searchFilter/searchContext';
 import FilterModal from '../searchFilter/searchFilterModal';
 // import http from '../../utils/http';
@@ -57,6 +58,7 @@ const StyledGridItem = styled(Grid)(({ theme }) => ({
 
 const MainPage = () => {
   const ratingValue = 4;
+  const navigate = useNavigate();
   const [detailedListings, setDetailedListings] = useState([]);
   const [filteredSearch, setFilteredSearch] = useState(false);
   const [searchValueAtSearch, setSearchValueAtSearch] = useState('');
@@ -70,6 +72,8 @@ const MainPage = () => {
   const [bedroomRange, setBedroomRange] = useState(
     { minBedrooms: '', maxBedrooms: '' },
   );
+  const [useDateRange, setUseDateRange] = useState(false);
+
   const handleFavoriteClick = (id) => {
     // Handle the click event for the favorite icon
     console.log('Favorite clicked for listing:', id);
@@ -79,59 +83,11 @@ const MainPage = () => {
     fetchAllListingsAndDetailsSequentially(setDetailedListings);
   }, []); // Empty dependency array means this effect runs once on mount
 
-  // const filterListings = (listings, searchValue, filters) => {
-  //   const lowerCaseSearchValue = searchValue.toLowerCase();
-  //   // if (lowerCaseSearchValue.trim() === '') return listings;
-  //   // return listings.filter(listing =>
-  //   //   listing.title.toLowerCase().includes(lowerCaseSearchValue) ||
-  //   //   listing.address.city.toLowerCase().includes(lowerCaseSearchValue)
-  //   // )
-  //   return listings.filter(listing => {
-  //     // Text search filter
-  //     const matchesSearch = lowerCaseSearchValue.trim() === '' ||
-  //                           listing.title.toLowerCase().includes(lowerCaseSearchValue) ||
-  //                           listing.address.city.toLowerCase().includes(lowerCaseSearchValue);
-
-  //     // Date range filter
-  //     // const matchesDate = (!filters.startDate || new Date(listing.startDate) >= new Date(filters.startDate)) &&
-  //     //                     (!filters.endDate || new Date(listing.endDate) <= new Date(filters.endDate));
-  //     // listing.some((availability) => {
-  //     //   const matchesDate = (!filters.startDate || new Date(availability.startDate) >= new Date(filters.startDate)) &&
-  //     //                       (!filters.endDate || new Date(availability.endDate) <= new Date(filters.endDate));
-  //     //   return matchesDate;
-  //     // }
-  //     // );
-
-  //     // !Price range filter
-  //     const matchesPrice = (filters.minPrice === '' ||
-  //                             parseInt(listing.price) >= parseInt(filters.minPrice)) &&
-  //                          (filters.maxPrice === '' ||
-  //                             parseInt(listing.price) <= parseInt(filters.maxPrice));
-
-  //     // !Bedrooms filter
-  //     const matchesBedrooms =
-  //       (filters.minBedrooms === '' ||
-  //          listing.metadata.bedrooms.length >= filters.minBedrooms) &&
-  //       (filters.maxBedrooms === '' ||
-  //         listing.metadata.bedrooms.length <= filters.maxBedrooms);
-
-  //     return (
-  //       matchesSearch &&
-  //       // matchesDate &&
-  //       matchesPrice &&
-  //       matchesBedrooms);
-  //   });
-  // }
-
-  // const sortListingsByTitle = (listings) => {
-  //   return listings.sort((a, b) => a.title.localeCompare(b.title));
-  // };
-
-  // store the current search value in searchValueAtSearch
-  // const filteredListings = filteredSearch
-  //   //  sort the filtered listings by title in alphabetical order
-  //   ? sortListingsByTitle(filterListings(detailedListings, searchValueAtSearch))
-  //   : sortListingsByTitle(detailedListings);
+  useEffect(() => {
+    const hasStartDate = dateRange.startDate !== null;
+    const hasEndDate = dateRange.endDate !== null;
+    setUseDateRange(hasStartDate && hasEndDate);
+  }, [dateRange.startDate, dateRange.endDate]);
 
   const filterListings = (listings, searchValue, filters) => {
     const lowerCaseSearchValue = searchValue.toLowerCase();
@@ -150,8 +106,8 @@ const MainPage = () => {
         const listingStartDate = new Date(availability.startDate);
         const listingEndDate = new Date(availability.endDate);
 
-        return (!filterStartDate || listingEndDate >= filterStartDate) &&
-               (!filterEndDate || listingStartDate <= filterEndDate);
+        return (!filterStartDate || listingEndDate >= filterEndDate) &&
+               (!filterEndDate || listingStartDate <= filterStartDate);
       });
 
       // Price range filter
@@ -171,6 +127,11 @@ const MainPage = () => {
       return matchesSearch && matchesAvailability && matchesPrice && matchesBedrooms;
     });
   }
+
+  const handleCardClick = (listing) => {
+    navigate(`/listings/viewing?${listing.id}`,
+      { state: { ...listing, useDateRange } });
+  };
 
   const filteredListings = filteredSearch
     ? filterListings(detailedListings,
@@ -257,7 +218,7 @@ const MainPage = () => {
                         cursor: 'pointer',
                         userSelect: 'none',
                       }}
-                      // onClick={() => handleCardClick(listing)}
+                      onClick={() => handleCardClick(listing)}
                     >
                       <CardMedia
                         component="img"

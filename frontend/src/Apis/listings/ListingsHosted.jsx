@@ -25,10 +25,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import http from '../../utils/http';
 import fetchAllListingsAndDetailsSequentially from '../../utils/fetchListingsDetails';
 import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar';
-import WelcomeTitle from './components/welcomeTitleComponent';
+import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent';
 import HintModal from '../../utils/modals/hintModal';
-import ThumbnailCard from './components/styledThumbnailCard';
-import UnderLinedText from './components/styledUnderlinedText';
+import ThumbnailCard from '../../utils/globalComponents/styledThumbnailCard';
+import UnderLinedText from '../../utils/globalComponents/styledUnderlinedText';
 
 const StyledGridContainer = styled(Grid)(({ theme }) => ({
 }));

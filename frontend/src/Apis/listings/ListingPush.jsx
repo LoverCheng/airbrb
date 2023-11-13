@@ -7,13 +7,9 @@
  */
 import React, { useState } from 'react';
 
-// import dayjs from 'dayjs';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/system';
 import {
-  Rating,
-  CardContent,
-  CardMedia,
   Typography,
   Button,
   IconButton,
@@ -21,18 +17,14 @@ import {
 } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import HintModal from '../../utils/modals/hintModal';
 
 import http from '../../utils/http';
 import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar';
-import WelcomeTitle from './components/welcomeTitleComponent';
-import ThumbnailCard from './components/styledThumbnailCard';
-import UnderLinedText from './components/styledUnderlinedText';
+import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent';
+import SingleCardComponent from '../../utils/globalComponents/singleCardComponent';
 
 const ListingForm = () => {
   const ratingValue = 4;
@@ -136,78 +128,13 @@ const ListingForm = () => {
       <PrimarySearchAppBar />
       <Box sx={{ padding: '2% 5%' }}>
         <WelcomeTitle extraInfo={ info }/>
-        <ThumbnailCard
-          sx={{
-            display: 'flex',
-            maxWidth: 600,
-            flexDirection: { xs: 'column', sm: 'row' }, // Change direction based on screen size
-            // Change to block display under 650px
-            margin: 'auto',
-            '@media (max-width: 650px)': {
-              display: 'block',
-              maxWidth: 400,
-            },
-          }}
-        >
-          <CardMedia
-            component="img"
-            height="194"
-            image={cardData.thumbnail}
-            alt="Paella dish"
-          />
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between'
-          }}>
-            <CardContent>
-              <Rating
-                name="controlled-rating"
-                value={ratingValue}
-                readOnly
-                emptyIcon={<StarBorderIcon fontSize="inherit" />}
-              />
-              <Typography
-                variant="body2"
-                sx={{ fontWeight: 'bold' }}
-              >
-                {`${cardData.title}`}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {`🚪: ${cardData.metadata.bedrooms.length}`}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {`🛌: 
-                  ${cardData.metadata.bedrooms.reduce(
-                    (acc, cur) => parseInt(acc) + parseInt(cur.beds), 0
-                    )
-                  }`
-                }
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {`🏡: ${cardData.address.street}, 
-                    ${cardData.address.city}, 
-                    ${cardData.address.state}, 
-                    ${cardData.address.postcode}, 
-                    ${cardData.address.country}`}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {`Property Type: ${cardData.metadata.propertyType}`}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {`💬  ${cardData.reviews.length}`}
-              </Typography>
-              <Typography variant="body2" color="text.secondary"></Typography>
-              <UnderLinedText sx={{ fontWeight: 'bold' }}>
-                {`💰💲${cardData.price} per day`}
-              </UnderLinedText>
-            </CardContent>
-          </Box>
-        </ThumbnailCard>
+        <SingleCardComponent
+          cardData={cardData}
+          ratingValue={ratingValue}
+          useDateRange={false}
+        />
       </Box>
 
-      {/* component for each time slot */}
-      {/* <Box sx={{ padding: '2% 5%' }}> */}
       <Box sx={{
         padding: '2% 5%',
         display: 'flex',

@@ -5,6 +5,7 @@ import { ModalWrapper } from './Apis/adminAuth/modals';
 import ListingForm from './Apis/listings/ListingForm';
 import ListingsHosted from './Apis/listings/ListingsHosted';
 import ListingPush from './Apis/listings/ListingPush';
+import ViewingPage from './Apis/viewing/ViewingPage';
 
 const EmptyComponent = () => null;
 
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/listings/hosted" element={<ListingsHosted/>}/>
         <Route path="/listings/update" element={<ListingForm/>}/>
         <Route path="/listings/push" element={<ListingPush/>}/>
+        <Route path="/listings/viewing" element={<ViewingPage/>}/>
       </Routes>
     </Router>
   );

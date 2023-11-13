@@ -190,29 +190,29 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 
 #### 2.4.1. View a Selected Listing
 
- * A unique route must exist for this screen that is parameterized on the Listing ID
- * For `2.3`, when a listing is clicked on, this screen should appear and display information about a specific listing.
+ * A unique route must exist for this screen that is parameterized on the Listing ID ✅
+ * For `2.3`, when a listing is clicked on, this screen should appear and display information about a specific listing.✅
  * On this screen the user is given the listing they have decided to view in 2.4.1. This consists of:
-	- Title
-	- Address (displayed as a string, e.g. 1/101 Kensington Street, Kensington, NSW)
-	- Amenities
+	- Title ✅
+	- Address (displayed as a string, e.g. 1/101 Kensington Street, Kensington, NSW) ✅
+	- Amenities ✅
 	- Price:
-		- If the user used a date range for search in `2.3.2` - display **price per stay **
-		- If the user did not use a date range for search in `2.3.2` - display **price per night** 
-	- All images of the property including the listing thumbnail (they don't have to be visible all at once)
-	- Type
-	- Reviews
-	- Review rating
-	- Number of bedrooms
-	- Number of beds
-	- Number of bathrooms
- * On this screen if the user is logged in and they have made booking for this listing, they should be able to see the status of their booking (see `2.4.2`).
- * (Note: if the user has made more than 1 booking for a listing, display the status of all the bookings)
+		- If the user used a date range for search in `2.3.2` - display **price per stay ** ✅
+		- If the user did not use a date range for search in `2.3.2` - display **price per night** ✅
+	- All images of the property including the listing thumbnail (they don't have to be visible all at once) ✅
+	- Type ✅
+	- Reviews 
+	- Review rating 
+	- Number of bedrooms ✅
+	- Number of beds ✅
+	- Number of bathrooms ✅
+ * On this screen if the user is logged in and they have made booking for this listing, they should be able to see the status of their booking (see `2.4.2`). 
+ * (Note: if the user has made more than 1 booking for a listing, display the status of all the bookings) 
 
 #### 2.4.2. Making a booking and checking its status
- * On the screen described in `2.4.1`, a **logged in** user should be able to make a booking for a given listing they are viewing between the dates they are after. The user enters two dates (this includes day, month and year), and assume the dates describe a valid booking, a button allows for the confirmation of the booking.
- * A user can make an unlimited number of bookings per listing even on overlapping date ranges and even if other users have already booked the property for those dates. It is up to the host to check if they have double booked their listing and accept/deny the bookings accordingly.
- * A booking's length (in days) is defined based on _how many nights_ a user spends at the listed property (this is how bookings are defined on all modern accommodation platforms). For example, a booking from the 15th to the 17th of November consists of 2 days in length - 15th to the 16th and 16th to the 17th. As this is a late addition to the specification, we will not be strictly enforcing how you chose to calculate a booking's length. So for the case described here, it could also be expressed as a 3 day long booking (15th, 16th and 17th as the 3 days).
+ * On the screen described in `2.4.1`, a **logged in** user should be able to make a booking for a given listing they are viewing between the dates they are after. The user enters two dates (this includes day, month and year), and assume the dates describe a valid booking, a button allows for the confirmation of the booking. 
+ * A user can make an unlimited number of bookings per listing even on overlapping date ranges and even if other users have already booked the property for those dates. It is up to the host to check if they have double booked their listing and accept/deny the bookings accordingly. 
+ * A booking's length (in days) is defined based on _how many nights_ a user spends at the listed property (this is how bookings are defined on all modern accommodation platforms). For example, a booking from the 15th to the 17th of November consists of 2 days in length - 15th to the 16th and 16th to the 17th. As this is a late addition to the specification, we will not be strictly enforcing how you chose to calculate a booking's length. So for the case described here, it could also be expressed as a 3 day long booking (15th, 16th and 17th as the 3 days). 
  * Once a booking is made, the user receives some kind of temporary confirmation on screen.
 
 #### 2.4.3 Leaving a listing review
