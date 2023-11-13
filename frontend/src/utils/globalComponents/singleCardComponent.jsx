@@ -47,8 +47,10 @@ const SingleCardComponent = ({ cardData, ratingValue, useDateRange }) => {
           }}
         >
         <Slider {...settings}>
-          {/* Assuming cardData.images is an array of image URLs */}
-            {[cardData.thumbnail].concat(cardData.metadata.images).map((image, index) => (
+          {/* concat the image of images and thumbnail */}
+            {[cardData.thumbnail]
+              .concat(cardData.metadata.images)
+              .map((image, index) => (
               <Box
                 key={index}
                 sx={{ width: '100%' }}>
@@ -59,7 +61,7 @@ const SingleCardComponent = ({ cardData, ratingValue, useDateRange }) => {
                   alt={`Image ${index}`}
                 />
               </Box>
-            ))}
+              ))}
         </Slider>
           <Box sx={{
             display: 'flex',

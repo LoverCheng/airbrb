@@ -57,7 +57,11 @@ const RegisterPage = ({ onClose }) => {
       noValidate
       autoComplete="off"
     >
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {errorMessage &&
+        <styleFormControl>
+          {errorMessage}
+        </styleFormControl>
+      }
       <h2>Register to Airbnb</h2>
       <Stack sx={ styleFormControl }>
         <FormControl>
@@ -93,15 +97,17 @@ const RegisterPage = ({ onClose }) => {
             id="confirmed-password"
             label="confirm password"
             type='password'
-            aria-describedby="component-error-text"
+            aria-describedby="password-confirm-error-text"
             error={passwordConfirmError}
             value={passwordConfirmation}
             onBlur={checkPasswordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
           {passwordConfirmError && (
-            <FormHelperText id="component-error-text" style={{ color: 'red' }}>
-              Error
+            <FormHelperText
+              id="password-confirm-error-text"
+              sx={{ color: 'red' }}>
+              Password not same
             </FormHelperText>
           )}
         </FormControl>

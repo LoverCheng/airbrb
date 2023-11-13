@@ -1,6 +1,7 @@
 import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar';
 import { React, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import {
   Container,
   Typography,
@@ -20,12 +21,16 @@ import {
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import InputAdornment from '@mui/material/InputAdornment';
 import BedroomForm from './components/bedroomComponent';
+
 import { BedroomContext } from './bedroomContext';
 import { fileToDataUrl } from '../../utils/fileToDataUrl';
 import http from '../../utils/http';
 import stripWhitespace from '../../utils/cleanData';
 import HintModal from '../../utils/modals/hintModal';
-// import { title } from 'process';
+
+const HiddenInput = styled.input`
+  display: none;
+`;
 
 const ListingForm = () => {
   const [street, setStreet] = useState('');
@@ -533,9 +538,8 @@ const ListingForm = () => {
         <Card sx={{ mb: '15px' }}>
           <CardContent>
             <Typography variant="h6">Add your Thumbnail</Typography>
-            <input
+            <HiddenInput
               accept="image/*"
-              style={{ display: 'none' }}
               id="add-thumbnail-file"
               multiple
               type="file"
@@ -577,9 +581,8 @@ const ListingForm = () => {
         <Card>
           <CardContent>
             <Typography variant="h6">Add your Images</Typography>
-            <input
+            <HiddenInput
               accept="image/*"
-              style={{ display: 'none' }}
               id="add-images-file"
               multiple
               type="file"

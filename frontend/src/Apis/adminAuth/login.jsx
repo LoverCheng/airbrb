@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import propTypes from 'prop-types';
 import { Button, Box, TextField } from '@mui/material';
 import http from '../../utils/http';
+
+const ErrorMessage = styled.p`
+  color: red;
+`;
 
 const LoginPage = ({ onClose }) => {
   const [email, setEmail] = useState('');
@@ -49,7 +54,7 @@ const LoginPage = ({ onClose }) => {
         autoComplete="off"
       >
         <h2>Login to Airbnb</h2>
-        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <div>
           <TextField
             required
