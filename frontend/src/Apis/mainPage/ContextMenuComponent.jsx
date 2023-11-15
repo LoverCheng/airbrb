@@ -39,6 +39,7 @@ export default function MenuComponent () {
     setters.handleMenuClose();
     // Remove the token from localStorage
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     // Redirect to home or any other page if needed
     navigate('/');
   };

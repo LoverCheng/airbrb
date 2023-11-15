@@ -8,11 +8,11 @@ import {
   Card,
   CardMedia,
   CardContent,
-  CardActions,
-  IconButton,
+  // CardActions,
+  // IconButton,
   Typography
 } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,17 +24,17 @@ import searchContext from '../searchFilter/searchContext';
 import FilterModal from '../searchFilter/searchFilterModal';
 // import http from '../../utils/http';
 
-const FavoriteIconButton = styled(IconButton)({
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  color: 'white',
-  margin: '16px', // assuming you want a 16px margin; adjust as needed
-  // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  '&:hover': {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-  },
-});
+// const FavoriteIconButton = styled(IconButton)({
+//   position: 'absolute',
+//   top: 0,
+//   right: 0,
+//   color: 'white',
+//   margin: '16px', // assuming you want a 16px margin; adjust as needed
+//   // backgroundColor: 'rgba(0, 0, 0, 0.5)',
+//   '&:hover': {
+//     backgroundColor: 'rgba(0, 0, 0, 0.7)',
+//   },
+// });
 
 const ThumbnailCard = styled(Card)({
   maxWidth: 345,
@@ -74,10 +74,10 @@ const MainPage = () => {
   );
   const [useDateRange, setUseDateRange] = useState(false);
 
-  const handleFavoriteClick = (id) => {
-    // Handle the click event for the favorite icon
-    console.log('Favorite clicked for listing:', id);
-  };
+  // const handleFavoriteClick = (id) => {
+  //   // Handle the click event for the favorite icon
+  //   console.log('Favorite clicked for listing:', id);
+  // };
 
   useEffect(() => {
     fetchAllListingsAndDetailsSequentially(setDetailedListings);
@@ -178,31 +178,6 @@ const MainPage = () => {
             <WelcomeTitle/>
             <Box sx={{ padding: '20px', display: 'flex' }}>
             <StyledGridContainer spacing={{ xs: 2, sm: 3, md: 4 }}>
-              <StyledGridItem item xs={12} sm={6} md={4} lg={3}>
-                <ThumbnailCard>
-                  <CardMedia
-                    component="img"
-                    height="194"
-                    image="https://mui.com/static/images/cards/paella.jpg"
-                    alt="Paella dish"
-                  />
-                  <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                      This impressive paella is a perfect party dish and a fun meal to cook
-                      together with your guests. Add 1 cup of frozen peas along with the mussels,
-                      if you like.
-                    </Typography>
-                  </CardContent>
-                  <CardActions disableSpacing>
-                    <FavoriteIconButton
-                      aria-label="add to favorites"
-                      onClick={handleFavoriteClick}
-                    >
-                      <FavoriteIcon />
-                    </FavoriteIconButton>
-                  </CardActions>
-                </ThumbnailCard>
-              </StyledGridItem>
               {filteredListings.map((listing) => (
                 // check if listing is published
                 listing.published && (

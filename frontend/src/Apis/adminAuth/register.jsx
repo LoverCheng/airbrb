@@ -6,10 +6,12 @@ import React, { useState } from 'react';
 import { Button, Box, FormControl, FormHelperText, InputLabel, OutlinedInput } from '@mui/material';
 import propTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
 import http from '../../utils/http';
 
 const styleFormControl = {
-  pt: 2
+  pt: 2,
 }
 
 const RegisterPage = ({ onClose }) => {
@@ -58,9 +60,11 @@ const RegisterPage = ({ onClose }) => {
       autoComplete="off"
     >
       {errorMessage &&
-        <styleFormControl>
+        <Typography
+          sx={{ color: 'red' }}
+        >
           {errorMessage}
-        </styleFormControl>
+        </Typography>
       }
       <h2>Register to Airbnb</h2>
       <Stack sx={ styleFormControl }>

@@ -1,4 +1,5 @@
 import http from './http';
+import fetchBookingListings from './fetchBookingListings';
 
 const fetchListingDetails = async (id) => {
   try {
@@ -23,12 +24,23 @@ const fetchListings = async () => {
 };
 
 const fetchAllListingsAndDetailsSequentially = async (setDetailedListings) => {
+  const token = localStorage.getItem('token') || null;
+  let bookings = [];
   try {
     // Fetch all listings first
     const listings = await fetchListings();
+    // const bookings = await fetchBookingListings();
+    if (token) {
+      bookings = await fetchBookingListings();
+    }
     if (listings) {
       // Iterate over the listings and fetch details for each one sequentially
       for (const listing of listings) {
+        // Filter the bookings to get the ones for this listing
+        if (token) {
+          listing.bookings = bookings.filter(booking =>
+            String(listing.id) === booking.listingId);
+        }
         const details = await fetchListingDetails(listing.id);
         setDetailedListings((prevDetailedListings) => {
           const metadata = details.metadata;

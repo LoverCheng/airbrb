@@ -19,8 +19,10 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import Badge from '@mui/material/Badge';
 
 import http from '../../utils/http';
 import fetchAllListingsAndDetailsSequentially from '../../utils/fetchListingsDetails';
@@ -63,13 +65,20 @@ const CloseIconButton = styled(IconButton)(({ theme }) => ({
   zIndex: 1 // Make sure this is above all other card contents
 }));
 
+const PostOfficeIconButton = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  right: 50,
+  top: 200,
+  zIndex: 1 // Make sure this is above all other card contents
+}));
+
 const ListingsHosted = () => {
+  const user = localStorage.getItem('user');
+  const navigate = useNavigate();
   const [detailedListings, setDetailedListings] = useState([]);
   const ratingValue = 2.4;
   const [hintModalOpen, setHintModalOpen] = useState(false);
-  // const [timerModalOpen, setTimerModalOpen] = useState(false);
   const [hintMessage, setHintMessage] = useState('');
-  const navigate = useNavigate();
 
   const handleDelete = async (event, id) => {
     event.stopPropagation();
@@ -112,24 +121,27 @@ const ListingsHosted = () => {
         setHintModalOpen(true);
         return;
       }
-      console.log(response);
       listing.published = false;
       setHintMessage('Unpublish successfully!');
       setHintModalOpen(true);
-      // navigate('/listings/hosted');
     })
+  }
+
+  const handleBookings = (event, listing) => {
+    event.stopPropagation();
+    console.log(listing);
+    const listingID = listing.id;
+    navigate(`/bookings/view?listingId=${listingID}`, { state: { ...listing } })
   }
 
   useEffect(() => {
   /**
-   * This effect will run once on mount and
    * fetch all listings and their details
    */
     fetchAllListingsAndDetailsSequentially(setDetailedListings);
   }, []);
 
   const extraInfo = 'You can click the card to update your listing';
-
   return (
     <>
       <HintModal
@@ -142,8 +154,8 @@ const ListingsHosted = () => {
         <WelcomeTitle extraInfo= {extraInfo} />
         <Box sx={{ padding: '20px', display: 'flex' }}>
           <StyledGridContainer spacing={{ xs: 2, sm: 3, md: 4 }}>
-            {detailedListings.map((listing) => (
-              // fetchListingDetails(listing);
+            {detailedListings.filter(
+              (listing) => listing.owner === user).map((listing) => (
               <StyledGridItem key={listing.id} item xs={12} sm={6} md={4} lg={3}>
                 <ThumbnailCard
                   sx={{
@@ -178,6 +190,33 @@ const ListingsHosted = () => {
                       </CloseIconButton>
                     </Tooltip>
                   }
+                  {/* booking messages */}
+                  { listing.postedOn
+                    ? <Tooltip title="Viewing booking requests" arrow>
+                      <PostOfficeIconButton onClick={ (event) => handleBookings(event, listing)}>
+                        <Badge badgeContent={listing.bookings.filter(
+                          booking => booking.status === 'pending').length}
+                          sx={{
+                            '& .MuiBadge-badge': {
+                              backgroundColor: 'rgb(239,54,15)',
+                              color: 'white',
+                              width: 15, // Adjust the width as needed
+                              height: 15, // Adjust the height as needed
+                              fontSize: '0.75rem',
+                            }
+                          }}
+                        >
+                          <LocalPostOfficeIcon />
+                        </Badge>
+                      </PostOfficeIconButton>
+                    </Tooltip>
+                    : <Tooltip title="Please post your property first" arrow>
+                          <PostOfficeIconButton onClick={ (event) => { event.stopPropagation(); }}>
+                            <LocalPostOfficeIcon />
+                          </PostOfficeIconButton>
+                        </Tooltip>
+                  }
+
                   <CardMedia
                     component="img"
                     height="194"

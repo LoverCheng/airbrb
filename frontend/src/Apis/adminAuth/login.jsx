@@ -26,6 +26,7 @@ const LoginPage = ({ onClose }) => {
         if (res.token) {
           console.log(`token: ${res.token}`);
           localStorage.setItem('token', res.token);
+          localStorage.setItem('user', email);
           onClose();
         } else {
           setErrorMessage(res.error);

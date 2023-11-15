@@ -210,33 +210,34 @@ When the app loads, regardless of whether a user is logged in or not, they can a
  * (Note: if the user has made more than 1 booking for a listing, display the status of all the bookings) 
 
 #### 2.4.2. Making a booking and checking its status
- * On the screen described in `2.4.1`, a **logged in** user should be able to make a booking for a given listing they are viewing between the dates they are after. The user enters two dates (this includes day, month and year), and assume the dates describe a valid booking, a button allows for the confirmation of the booking. 
- * A user can make an unlimited number of bookings per listing even on overlapping date ranges and even if other users have already booked the property for those dates. It is up to the host to check if they have double booked their listing and accept/deny the bookings accordingly. 
- * A booking's length (in days) is defined based on _how many nights_ a user spends at the listed property (this is how bookings are defined on all modern accommodation platforms). For example, a booking from the 15th to the 17th of November consists of 2 days in length - 15th to the 16th and 16th to the 17th. As this is a late addition to the specification, we will not be strictly enforcing how you chose to calculate a booking's length. So for the case described here, it could also be expressed as a 3 day long booking (15th, 16th and 17th as the 3 days). 
- * Once a booking is made, the user receives some kind of temporary confirmation on screen.
+ * On the screen described in `2.4.1`, a **logged in** user should be able to make a booking for a given listing they are viewing between the dates they are after. The user enters two dates (this includes day, month and year), and assume the dates describe a valid booking, a button allows for the confirmation of the booking. ✅
+ * A user can make an unlimited number of bookings per listing even on overlapping date ranges and even if other users have already booked the property for those dates. It is up to the host to check if they have double booked their listing and accept/deny the bookings accordingly. ✅
+ * A booking's length (in days) is defined based on _how many nights_ a user spends at the listed property (this is how bookings are defined on all modern accommodation platforms). For example, a booking from the 15th to the 17th of November consists of 2 days in length - 15th to the 16th and 16th to the 17th. As this is a late addition to the specification, we will not be strictly enforcing how you chose to calculate a booking's length. So for the case described here, it could also be expressed as a 3 day long booking (15th, 16th and 17th as the 3 days). ✅
+ * Once a booking is made, the user receives some kind of temporary confirmation on screen. ✅
 
 #### 2.4.3 Leaving a listing review
-* A logged in user should be able to leave a review for listings they've booked that will immidiately appear on the listing screen after it's been posted by the user. The review will consist of a score (number) and a comment (text). You can leave an unlimited number of reviews per listing.
-* Please note: Normally you'd prohibit reviews until after a booking visit is complete, but in this case for simplicity we allow reviews to be left as soon as a booking's status becomes `accepted`.
-* If the user has made more than 1 booking for a given listing, you can use any of their `bookingid`s for the purpose of leaving a review. Just as long as the booking has status `accepted`.
+
+* A logged in user should be able to leave a review for listings they've booked that will immidiately appear on the listing screen after it's been posted by the user. The review will consist of a score (number) and a comment (text). You can leave an unlimited number of reviews per listing.  
+* Please note: Normally you'd prohibit reviews until after a booking visit is complete, but in this case for simplicity we allow reviews to be left as soon as a booking's status becomes `accepted`. ✅
+* If the user has made more than 1 booking for a given listing, you can use any of their `bookingid`s for the purpose of leaving a review. Just as long as the booking has status `accepted`. ✅
 
 ### 2.5. Feature Set 5. Removing a Listing, Managing Booking Requests (9% for solo, 8% for pairs)
 
 #### 2.5.1. Removing a live listing
- * On the hosted listings screen described in `2.2.1`, add the ability to remove a live listing from being visible to other users. 
- * Once un-published, those who had made bookings for a removed listing will no longer be able to view it on their landing screen
+ * On the hosted listings screen described in `2.2.1`, add the ability to remove a live listing from being visible to other users. ✅
+ * Once un-published, those who had made bookings for a removed listing will no longer be able to view it on their landing screen. ✅
 
 #### 2.5.2. Viewing booking requests and history for a hosted listing
 
- * A unique route must exist for this screen that is parameterised on the listing ID
- * This screen should be accessed via a button or link on the hosted listings screen `2.2.1`.
- * On this screen, a list of booking requests are provided for the listing they are viewing. For each booking request, the host is able to accept/deny it.
- * The screen should also display the following information about a listing:
-	* How long has the listing been up online
-	* The booking request history for this listing consisting of all booking requests for this listing and their status (accepted/denied)
-	* How many days this year has the listing been booked for
-	* How much profit has this listing made the owner this year
-	* (Note: When counting the days and profits, inlcude all the bookings, past or future, that have been accepted for this year)
+ * A unique route must exist for this screen that is parameterized on the listing ID ✅
+ * This screen should be accessed via a button or link on the hosted listings screen `2.2.1`. ✅
+ * On this screen, a list of booking requests are provided for the listing they are viewing. For each booking request, the host is able to accept/deny it. ✅
+ * The screen should also display the following information about a listing: ✅
+	* How long has the listing been up online ✅
+	* The booking request history for this listing consisting of all booking requests for this listing and their status (accepted/denied) ✅ 
+	* How many days this year has the listing been booked for  ✅
+	* How much profit has this listing made the owner this year ✅
+	* (Note: When counting the days and profits, inlcude all the bookings, past or future, that have been accepted for this year) ✅
 
 ### 2.6. Feature Set 6. Advanced Features (0% for solo, 8% for pairs)
 
@@ -294,6 +295,7 @@ For **ui testing**, you must:
  * Your app is going to be a set of pages, and those pages are made up of primitive components. But if you don't have layers of components between that it means your code is not well modularised. Another example could be if we said to you - no component should be longer than 50 lines of code. You'd probably go refactor to group common sets of primitives together into a new component.
 
 #### Advice for UI Testing
+
  * For cypress, consider adding `cy.wait(1000)` if necessary to add slight pauses in your tests if you find that the page is rendering slower than cypress is trying to test.
  * If you're having issues using Cypress on WSL2, try following [this guide](https://shouv.medium.com/how-to-run-cypress-on-wsl2-989b83795fb6).
 

@@ -6,6 +6,7 @@ import ListingForm from './Apis/listings/ListingForm';
 import ListingsHosted from './Apis/listings/ListingsHosted';
 import ListingPush from './Apis/listings/ListingPush';
 import ViewingPage from './Apis/viewing/ViewingPage';
+import BookingsPage from './Apis/bookings/BookingsPage';
 
 const EmptyComponent = () => null;
 
@@ -33,6 +34,8 @@ const App = () => {
         <Route path="/listings/update" element={<ListingForm/>}/>
         <Route path="/listings/push" element={<ListingPush/>}/>
         <Route path="/listings/viewing" element={<ViewingPage/>}/>
+
+        <Route path="/bookings/view" element={<BookingsPage/>}/>
       </Routes>
     </Router>
   );

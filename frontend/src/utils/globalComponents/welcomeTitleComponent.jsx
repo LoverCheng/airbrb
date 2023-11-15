@@ -10,9 +10,10 @@ import propTypes from 'prop-types';
 
 const WelcomeTitle = (extraInfo) => {
   const info = extraInfo.extraInfo;
+  const user = localStorage.getItem('user');
   return (
       <Paper elevation={0} sx={{ margin: '20px' }}>
-      <Typography variant="h4">Welcome!</Typography>
+      <Typography variant="h4">Welcome! {user}</Typography>
       <Typography variant="body1" sx={{ marginBottom: '25px', color: 'gray', fontWeight: 'light' }}>
         {/* Guests can reserve your place 24 hours after you publish. */}
         <br />

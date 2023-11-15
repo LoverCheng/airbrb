@@ -17,8 +17,6 @@ import ThumbnailCard from './styledThumbnailCard';
 import UnderLinedText from './styledUnderlinedText';
 
 const SingleCardComponent = ({ cardData, ratingValue, useDateRange }) => {
-  console.log('inner useDateRange', useDateRange);
-  console.log([cardData.thumbnail].concat(cardData.metadata.images));
   const settings = {
     dots: true,
     infinite: true,
@@ -37,7 +35,8 @@ const SingleCardComponent = ({ cardData, ratingValue, useDateRange }) => {
             display: 'block',
             // position: 'fixed',
             maxWidth: 400,
-            margin: 'auto',
+            // margin: 'auto',
+            marginBottom: '2%',
             // Change to block display under 650px
             alignItems: 'center',
             '@media (max-width: 650px)': {
