@@ -14,8 +14,5 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // paddingRight: `calc(1em + ${theme.spacing(4)})`, // Add padding on the right
     transition: theme.transitions.create('width'),
     width: '100%',
-    // [theme.breakpoints.down('md')]: {
-    //   width: '70%'
-    // },
   },
 }));

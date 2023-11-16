@@ -123,7 +123,6 @@ const BookingInfoComponent = ({ cardData }) => {
                         <CardMedia
                           component="img"
                           height="250px"
-                          // height={{ xs: '150px', md: '200px' }} // Responsive height
                           image={image}
                           alt={`Image ${index}`}
                         />

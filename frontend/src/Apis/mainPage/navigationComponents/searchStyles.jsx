@@ -39,7 +39,6 @@ export const SearchIconWrapper = styled('div')(({ theme }) => ({
    * left and right => 2 * 8px = 16px
    */
   padding: theme.spacing(0, 2),
-  // height: '10%',
   top: '10%',
   right: '1%', // Adjust position to be on the right
   position: 'absolute',
@@ -57,7 +56,6 @@ export const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   // Create a circular shape
   borderRadius: '50%',
-  // transform: 'translateY(-50%)', // Adjust vertically to center the icon
   // Set the circle's size
   width: theme.spacing(0), // Adjust the size of the circle here
   height: theme.spacing(4), // Adjust the size of the circle here

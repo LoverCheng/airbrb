@@ -14,8 +14,6 @@ const LoginPage = ({ onClose }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = (event) => {
-    // Here, you'd normally make an API call to your backend to authenticate the user
-    // For now, we'll just mock an error
     event.preventDefault();
     if (email && password) {
       // Assume registration is successful
@@ -43,10 +41,6 @@ const LoginPage = ({ onClose }) => {
         sx={{
           '& .MuiTextField-root': { m: 1 },
           width: '100%', // Use 100% of the container width
-          // maxWidth: {
-          //   xs: '100%', // 100% of the width on extra-small devices
-          //   sm: '400px', // 400px on small devices and up
-          // },
           minWidth: '90%',
           mx: 'auto', // Horizontally center the Box in the container
           p: 4, // Padding inside the Box

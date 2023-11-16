@@ -135,16 +135,6 @@ const MainPage = () => {
     }
   }
 
-  // let filteredListings = detailedListings;
-  // console.log('filteredListings');
-  // console.log(filteredListings);
-
-  // useEffect(() => {
-  //   if (filterListings === detailedListings) {
-  //     setFilteredSearch(false);
-  //   }
-  // }, [filteredListings]);
-
   const handleSearchClick = (event) => {
     event.preventDefault();
     setSearchValueAtSearch(basicSearchValue);

@@ -74,7 +74,6 @@ const fetchAllListingsAndDetailsSequentially = async (setDetailedListings) => {
         }
       }
       // sort in alphabetical order
-      // console.log(highPriority);
       if (token && highPriority.length > 0) {
         const sortedListings = listings.sort((a, b) => a.title.localeCompare(b.title));
         const tmp = sortedListings.filter(listing => !highPriority.includes(listing));
