@@ -5,6 +5,8 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import StyledFilterButton from './StyledFilterButton';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 import searchContext from './searchContext';
 
@@ -16,6 +18,8 @@ export default function FilterModal () {
   const setPriceRange = searchSetters.setPriceRange;
   const bedroomRange = searchGetters.bedroomRange;
   const setBedroomRange = searchSetters.setBedroomRange;
+  const ratingOrder = searchGetters.ratingOrder;
+  const setRatingOrder = searchSetters.setRatingOrder;
 
   const [open, setOpen] = useState(false);
 
@@ -48,6 +52,7 @@ export default function FilterModal () {
     setDateRange({ startDate: null, endDate: null });
     setPriceRange({ minPrice: '', maxPrice: '' });
     setBedroomRange({ minBedrooms: '', maxBedrooms: '' });
+    setRatingOrder('descending');
   }
 
   const handleMinPriceBlur = (event) => {
@@ -198,7 +203,19 @@ export default function FilterModal () {
                 onBlur={handleMaxBedroomsBlur}
               />
             </Box>
-
+            <Typography gutterBottom>Sorting Order</Typography>
+            <Box display="flex" gap={2}>
+            <Select
+                labelId="sort-select-label"
+                id="sort-select"
+                value={ratingOrder}
+                onChange={(event) => setRatingOrder(event.target.value)}
+                label="Sort Order"
+            >
+                <MenuItem value="descending">Descending</MenuItem>
+                <MenuItem value="ascending">Ascending</MenuItem>
+            </Select>
+            </Box>
             <Box mt={2} display="flex" justifyContent="space-between">
               <Button
                 variant="outlined"

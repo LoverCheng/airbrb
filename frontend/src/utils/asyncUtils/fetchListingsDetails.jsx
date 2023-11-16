@@ -31,7 +31,9 @@ const fetchListings = async () => {
 
 const fetchAllListingsAndDetailsSequentially = async (setDetailedListings) => {
   const token = localStorage.getItem('token') || null;
+  const user = localStorage.getItem('user') || null;
   let bookings = [];
+  const highPriority = [];
   try {
     // Fetch all listings first
     const listings = await fetchListings();
@@ -47,14 +49,45 @@ const fetchAllListingsAndDetailsSequentially = async (setDetailedListings) => {
           listing.bookings = bookings.filter(booking =>
             String(listing.id) === booking.listingId);
         }
+        // calculate the average rating
+        if (listing.reviews.length > 0) {
+          listing.averageRating = listing.reviews.reduce((acc, review) => {
+            return acc + review.rating;
+          }, 0) / listing.reviews.length;
+        } else {
+          listing.averageRating = 0;
+        }
         const details = await fetchListingDetails(listing.id);
-        setDetailedListings((prevDetailedListings) => {
-          const metadata = details.metadata;
-          const result = [...prevDetailedListings, { ...listing, metadata, ...details }]
-          //! we can print the result here to see what it looks like
-          console.log(result);
-          return result;
-        });
+        listing.metadata = details.metadata;
+        listing.availability = details.availability;
+        listing.postedOn = details.postedOn;
+        listing.published = details.published;
+        if (token && listing.bookings.length > 0) {
+          for (const booking of listing.bookings) {
+            if (booking.owner === user) {
+              listing.status = booking.status;
+              if (booking.status === 'pending' || booking.status === 'accepted') {
+                highPriority.push(listing);
+              }
+            }
+          }
+        }
+      }
+      // sort in alphabetical order
+      // console.log(highPriority);
+      if (token && highPriority.length > 0) {
+        const sortedListings = listings.sort((a, b) => a.title.localeCompare(b.title));
+        const tmp = sortedListings.filter(listing => !highPriority.includes(listing));
+        const result = highPriority.concat(tmp);
+        setDetailedListings(result);
+        console.log(result);
+        return;
+      } else {
+        const result = listings.sort((a, b) => a.title.localeCompare(b.title));
+        // const result = highPriority.concat(tmp);
+        //! we can print the result here to see what it looks like
+        console.log(result);
+        setDetailedListings(result);
       }
     }
   } catch (error) {

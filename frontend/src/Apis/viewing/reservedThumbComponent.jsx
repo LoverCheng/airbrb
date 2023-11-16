@@ -88,7 +88,8 @@ const ReservedThumbComponent = ({
     for (const booking of bookingDetails) {
       if (
         String(booking.owner) === localStorage.getItem('user') &&
-        String(booking.listingId) === String(cardData.id)
+        String(booking.listingId) === String(cardData.id) &&
+        cardData.status === 'accepted'
       ) {
         setCommentPriority(true);
         setBookingID(booking.id);

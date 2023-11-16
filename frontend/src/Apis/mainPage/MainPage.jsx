@@ -44,9 +44,10 @@ const StyledGridItem = styled(Grid)(({ theme }) => ({
 const MainPage = () => {
   const navigate = useNavigate();
   const [detailedListings, setDetailedListings] = useState([]);
-  const [filteredSearch, setFilteredSearch] = useState(false);
+  // const [filteredSearch, setFilteredSearch] = useState(false);
   const [searchValueAtSearch, setSearchValueAtSearch] = useState('');
   const [basicSearchValue, setBasicSearchValue] = React.useState('');
+  const [filteredListings, setFilteredListings] = useState(detailedListings);
   const [dateRange, setDateRange] = useState(
     { startDate: null, endDate: null },
   );
@@ -57,9 +58,11 @@ const MainPage = () => {
     { minBedrooms: '', maxBedrooms: '' },
   );
   const [useDateRange, setUseDateRange] = useState(false);
+  const [ratingOrder, setRatingOrder] = useState('descending');
 
   useEffect(() => {
-    fetchAllListingsAndDetailsSequentially(setDetailedListings);
+    fetchAllListingsAndDetailsSequentially(setDetailedListings).then((result) => {
+    });
   }, []); // Empty dependency array means this effect runs once on mount
 
   useEffect(() => {
@@ -67,6 +70,17 @@ const MainPage = () => {
     const hasEndDate = dateRange.endDate !== null;
     setUseDateRange(hasStartDate && hasEndDate);
   }, [dateRange.startDate, dateRange.endDate]);
+
+  useEffect(() => {
+    // alphabetical order
+    // const result = detailedListings.sort((a, b) => a.title.localeCompare(b.title));
+    setFilteredListings(detailedListings);
+  }, [detailedListings]);
+
+  // const handleBasicSearchClick = (event) => {
+  //   event.preventDefault();
+  //   // setSearchValueAtSearch(basicSearchValue);
+  //   setFilteredListings(basicSearchValue)
 
   const filterListings = (listings, searchValue, filters) => {
     const lowerCaseSearchValue = searchValue.toLowerCase();
@@ -112,40 +126,66 @@ const MainPage = () => {
       { state: { ...listing, useDateRange } });
   };
 
-  const filteredListings = filteredSearch
-    ? filterListings(detailedListings,
-      searchValueAtSearch,
-      {
-        startDate: dateRange.startDate,
-        endDate: dateRange.endDate,
-        minPrice: priceRange.minPrice,
-        maxPrice: priceRange.maxPrice,
-        minBedrooms: bedroomRange.minBedrooms,
-        maxBedrooms: bedroomRange.maxBedrooms
-      })
-    : detailedListings;
+  const sortByRating = (listings, order) => {
+    console.log('entered');
+    if (order === 'descending') {
+      return listings.sort((a, b) => b.averageRating - a.averageRating);
+    } else {
+      return listings.sort((a, b) => a.averageRating - b.averageRating);
+    }
+  }
+
+  // let filteredListings = detailedListings;
+  // console.log('filteredListings');
+  // console.log(filteredListings);
+
+  // useEffect(() => {
+  //   if (filterListings === detailedListings) {
+  //     setFilteredSearch(false);
+  //   }
+  // }, [filteredListings]);
 
   const handleSearchClick = (event) => {
     event.preventDefault();
     setSearchValueAtSearch(basicSearchValue);
     // Trigger the filtering logic here
-    setFilteredSearch(true); // This will indicate that a search has been performed
-    console.log('search icon clicked');
+    console.log('handleSearchClick');
+    const result = sortByRating(
+      filterListings(detailedListings,
+        searchValueAtSearch,
+        {
+          startDate: dateRange.startDate,
+          endDate: dateRange.endDate,
+          minPrice: priceRange.minPrice,
+          maxPrice: priceRange.maxPrice,
+          minBedrooms: bedroomRange.minBedrooms,
+          maxBedrooms: bedroomRange.maxBedrooms
+        }),
+      ratingOrder
+    );
+    setFilteredListings(result);
+    console.log('filteredListings');
+    console.log(filteredListings);
+    // : detailedListings;
+    // setFilteredSearch(true); // This will indicate that a search has been performed
   };
 
   const searchGetters = {
     basicSearchValue,
     dateRange,
     priceRange,
-    bedroomRange
+    bedroomRange,
+    ratingOrder
   }
 
   const searchSetters = {
     setBasicSearchValue,
+    // handleBasicSearchClick,
     handleSearchClick,
     setDateRange,
     setPriceRange,
-    setBedroomRange
+    setBedroomRange,
+    setRatingOrder
   }
 
   return (
@@ -218,6 +258,9 @@ const MainPage = () => {
                           {`💬  ${listing.reviews.length}`}
                         </Typography>
                         <Typography variant="body2" color="text.secondary"></Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {listing.status ? `📅 ${listing.status}` : '📅try to get it'}
+                        </Typography>
                         <UnderLinedText sx={{ fontWeight: 'bold' }}>
                           {`💰💲${listing.price} per day`}
                         </UnderLinedText>
