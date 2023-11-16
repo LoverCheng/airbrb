@@ -20,19 +20,6 @@ import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent';
 import searchContext from '../searchFilter/searchContext';
 import FilterModal from '../searchFilter/searchFilterModal';
 import computeRating from '../../utils/computingUtils/computeRating';
-// import http from '../../utils/http';
-
-// const FavoriteIconButton = styled(IconButton)({
-//   position: 'absolute',
-//   top: 0,
-//   right: 0,
-//   color: 'white',
-//   margin: '16px', // assuming you want a 16px margin; adjust as needed
-//   // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-//   '&:hover': {
-//     backgroundColor: 'rgba(0, 0, 0, 0.7)',
-//   },
-// });
 
 const ThumbnailCard = styled(Card)({
   maxWidth: 345,
@@ -70,11 +57,6 @@ const MainPage = () => {
     { minBedrooms: '', maxBedrooms: '' },
   );
   const [useDateRange, setUseDateRange] = useState(false);
-
-  // const handleFavoriteClick = (id) => {
-  //   // Handle the click event for the favorite icon
-  //   console.log('Favorite clicked for listing:', id);
-  // };
 
   useEffect(() => {
     fetchAllListingsAndDetailsSequentially(setDetailedListings);
@@ -240,14 +222,6 @@ const MainPage = () => {
                           {`💰💲${listing.price} per day`}
                         </UnderLinedText>
                       </CardContent>
-                      {/* <CardActions disableSpacing>
-                        <FavoriteIconButton
-                          aria-label="add to favorites"
-                          onClick={() => handleFavoriteClick(listing.id)}
-                        >
-                          <FavoriteIcon/>
-                        </FavoriteIconButton>
-                      </CardActions> */}
                     </ThumbnailCard>
                   </StyledGridItem>
                 )

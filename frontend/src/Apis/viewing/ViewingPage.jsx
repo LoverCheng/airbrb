@@ -8,6 +8,7 @@ import parseISO from 'date-fns/parseISO';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import styled from '@mui/material/styles/styled';
 
 import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar'
 import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent'
@@ -21,10 +22,42 @@ import { countDays } from '../../utils/computingUtils/countDays';
 import commentContext from './commentContext';
 import computeRating from '../../utils/computingUtils/computeRating';
 
+const FlexCenterBox = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignContent: 'center',
+});
+
+const CommentWrapperCard = styled(ThumbnailCard)({
+  minWidth: '800px',
+  margin: '10px 20px',
+  '@media (max-width: 920px)': {
+    maxWidth: '400px',
+    minWidth: '400px',
+    margin: '20px 0px',
+  },
+});
+
+const EachCommentBox = styled(Box)({
+  // display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  margin: '10px 0px',
+  padding: '10px 0px',
+  border: '1px solid black',
+  borderRadius: '10px',
+});
+
+const M20LRBox = styled(Box)({
+  margin: '0px 20px',
+});
+
 const ViewingPage = () => {
   const token = localStorage.getItem('token');
   const location = useLocation();
   const cardData = location.state;
+  console.log(cardData);
   const [dateRange, setDateRange] = useState(
     { startDate: null, endDate: null },
   );
@@ -146,35 +179,56 @@ const ViewingPage = () => {
               cardData={cardData}
             />
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignContent: 'center',
-              justifyContent: 'center',
-              width: '100%',
-              // margin: '20px 20px',
-            }}
-          >
-            <ThumbnailCard
-              sx={{
-                minWidth: '800px',
-                margin: '10px 20px',
-                '@media (max-width: 920px)': {
-                  maxWidth: '400px',
-                  minWidth: '400px',
-                  margin: '20px 0px',
-                },
-              }}
-            >
-              <Box
-                sx={{
-                  margin: '20px 20px',
-                }}>
+          <FlexCenterBox>
+            <CommentWrapperCard>
+              <M20LRBox>
                 <Typography
                   variant="h6"
                   color="text.secondary"
                   sx={{
-                    fontWeight: 'lighter',
+                    fontWeight: 'bolder',
+                    marginTop: '10px',
+                  }}
+                >
+                  Your booking history:
+                </Typography>
+                  {cardData.bookings.map((booking, index) => (
+                    <EachCommentBox key={'booking' + index}>
+                      <M20LRBox>
+                        <Typography
+                          variant="h6"
+                          color="text.secondary"
+                          sx={{
+                            fontWeight: 'lighter',
+                            marginTop: '10px',
+                          }}
+                        >
+                          {`Time: ${booking.dateRange.startDate} - ${booking.dateRange.endDate}`}
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          color="text.secondary"
+                          sx={{
+                            fontWeight: 'lighter',
+                            marginTop: '10px',
+                          }}
+                        >
+                          status: {booking.status}
+                        </Typography>
+                      </M20LRBox>
+                    </EachCommentBox>
+                  ))}
+              </M20LRBox>
+            </CommentWrapperCard>
+          </FlexCenterBox>
+          <FlexCenterBox>
+            <CommentWrapperCard>
+              <M20LRBox>
+                <Typography
+                  variant="h6"
+                  color="text.secondary"
+                  sx={{
+                    fontWeight: 'bolder',
                     marginTop: '10px',
                   }}
                 >
@@ -182,42 +236,31 @@ const ViewingPage = () => {
                 </Typography>
                   {
                     reviews.map((reserving, index) => (
-                      <Box
-                        key={index}
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          justifyContent: 'space-around',
-                          margin: '10px 0px',
-                          padding: '10px 0px',
-                          border: '1px solid black',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        <Rating
-                          name="controlled-rating"
-                          value={reserving.rating}
-                          disabled={true}
-                          emptyIcon={<StarBorderIcon fontSize="inherit" />}
-                        />
-                        <Typography
-                          variant="h6"
-                          color="text.secondary"
-                          sx={{
-                            fontWeight: 'lighter',
-                            // textAlign: 'center',
-                            marginTop: '10px',
-                          }}
-                        >
-                          {`${reserving.comment}`}
-                        </Typography>
-                      </Box>
+                      <EachCommentBox key={index}>
+                        <M20LRBox>
+                          <Rating
+                            name="controlled-rating"
+                            value={reserving.rating}
+                            disabled={true}
+                            emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                          />
+                          <Typography
+                            variant="h6"
+                            color="text.secondary"
+                            sx={{
+                              fontWeight: 'lighter',
+                              marginTop: '10px',
+                            }}
+                          >
+                            {`${reserving.comment}`}
+                          </Typography>
+                        </M20LRBox>
+                      </EachCommentBox>
                     ))
                   }
-              </Box>
-            </ThumbnailCard>
-          </Box>
+              </M20LRBox>
+            </CommentWrapperCard>
+          </FlexCenterBox>
         </Box>
         <HintModal
           open={hintModalOpen}

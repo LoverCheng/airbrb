@@ -16,6 +16,21 @@ import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar'
 import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent';
 import BookingInfoComponent from './BookingInfoComponent';
 import SingleCardComponent from '../../utils/globalComponents/singleCardComponent';
+import styled from 'styled-components';
+
+const StyledCommentsCard = styled(ThumbnailCard)`
+  display: block;
+  max-width: 400px;
+  min-width: 300px;
+  margin-top: 20px;
+  align-items: center;
+  margin-left: 20px;
+
+  @media (max-width: 650px) {
+    max-width: 400px;
+    margin: 20px auto;
+  }
+`;
 
 function calculateTotalPriceThisYear (bookings) {
   const currentYear = new Date().getFullYear();
@@ -60,7 +75,7 @@ const BookingsPage = () => {
           }}
         >
           <SingleCardComponent cardData={cardData} />
-          <ThumbnailCard
+          <StyledCommentsCard
             sx={{
               display: 'block',
               // position: 'fixed',
@@ -116,7 +131,7 @@ const BookingsPage = () => {
                 </Typography>
               </CardContent>
             </Box>
-          </ThumbnailCard>
+          </StyledCommentsCard>
         </Box>
         <BookingInfoComponent cardData={cardData} />
       </Box>

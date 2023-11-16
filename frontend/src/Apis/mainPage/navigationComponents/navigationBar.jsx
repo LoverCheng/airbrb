@@ -1,7 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import MenuComponent from '../ContextMenuComponent';
-// import MobileMenuComponent from './mobileMenuComponent';
 import NavbarMiddle from './NavbarMiddle';
 import { initialValue, Context } from './navContext';
 
@@ -52,9 +51,6 @@ export default function PrimarySearchAppBar () {
     <Context.Provider value={{ getters, setters }}>
       <Box sx={{ flexGrow: 1 }}>
         <NavbarMiddle />
-
-        {/* <MobileMenuComponent/> */}
-
         <MenuComponent
           menuId={menuId}
           anchorEl={anchorEl}
