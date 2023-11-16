@@ -1,26 +1,22 @@
+/**
+ * @fileOverview timerModal.jsx
+ * @abstract timerModal component is used to show the timer modal
+ * @author Jason
+ * @version 1.0.0
+ */
 import React from 'react';
 import { Modal } from '@mui/material';
 import propTypes from 'prop-types';
-// import style from './modalStyle';
 import dayjs from 'dayjs';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import { DatePicker, LocalizationProvider } from '@mui/lab';
-// import AdapterDateFns from '@date-io/date-fns';
 
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-// const disabledDate = (current) => {
-//   // Can not select days before today and today
-//   return current && current < dayjs().endOf('day');
-// };
-
 const TimerModal = ({ open, handleClose, hintMessage }) => {
   const [value, setValue] = React.useState(dayjs('2022-04-17T15:30'));
   return (
-  // <ThemeProvider theme={theme}>
       <Modal
         open={open}
         onClose={handleClose}

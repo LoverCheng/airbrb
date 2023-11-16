@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Box } from '@mui/system';
 import {
   TextField,
   Typography,
   Button,
-  // Modal,
 } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import {
   LocalizationProvider,
-  // StaticDatePicker,
   DatePicker,
 } from '@mui/x-date-pickers';
 
@@ -19,8 +17,9 @@ import HintModal from '../../utils/modals/hintModal';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import ThumbnailCard from '../../utils/globalComponents/styledThumbnailCard';
 import StyledRedButton from './StyledReservedButton';
-import fetchBookingListings from '../../utils/fetchBookingListings';
+import fetchBookingListings from '../../utils/asyncUtils/fetchBookingListings';
 import propTypes from 'prop-types';
+import commentContext from './commentContext';
 
 const ReservedThumbComponent = ({
   rangeSelected, countDays, dateRange,
@@ -36,7 +35,7 @@ const ReservedThumbComponent = ({
   const [bookingID, setBookingID] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [hintMessage, setHintMessage] = React.useState('');
-  console.log(cardData);
+  const { commentsSetters } = useContext(commentContext);
   const handleCloseModal = () => {
     setModalOpen(false);
   }
@@ -69,6 +68,9 @@ const ReservedThumbComponent = ({
         setModalOpen(true);
         setRatingValue(0);
         setCommentValue('');
+        commentsSetters.setReviews((previous) => {
+          return [...previous, body.review];
+        })
       })
       .catch((error) => {
         console.log(error);
@@ -83,14 +85,11 @@ const ReservedThumbComponent = ({
 
   useEffect(() => {
     if (bookingDetails.length === 0) return;
-    console.log(bookingDetails.filter(booking =>
-      String(booking.listingId) === String(cardData.id)));
     for (const booking of bookingDetails) {
       if (
         String(booking.owner) === localStorage.getItem('user') &&
         String(booking.listingId) === String(cardData.id)
       ) {
-        console.log('enter the if statement');
         setCommentPriority(true);
         setBookingID(booking.id);
         return;
@@ -113,7 +112,7 @@ const ReservedThumbComponent = ({
         minWidth: '400px',
         marginBottom: '2%',
         marginLeft: '20px',
-        '@media (max-width: 920px)': {
+        '@media (max-width: 850px)': {
           marginTop: '20px',
           maxWidth: '400px',
           marginLeft: '0px',

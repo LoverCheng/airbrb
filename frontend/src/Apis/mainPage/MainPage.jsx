@@ -8,20 +8,18 @@ import {
   Card,
   CardMedia,
   CardContent,
-  // CardActions,
-  // IconButton,
   Typography
 } from '@mui/material';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useNavigate } from 'react-router-dom';
 
 import PrimarySearchAppBar from './navigationComponents/navigationBar';
-import fetchAllListingsAndDetailsSequentially from '../../utils/fetchListingsDetails';
+import fetchAllListingsAndDetailsSequentially from '../../utils/asyncUtils/fetchListingsDetails';
 import UnderLinedText from '../../utils/globalComponents/styledUnderlinedText';
 import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent';
 import searchContext from '../searchFilter/searchContext';
 import FilterModal from '../searchFilter/searchFilterModal';
+import computeRating from '../../utils/computingUtils/computeRating';
 // import http from '../../utils/http';
 
 // const FavoriteIconButton = styled(IconButton)({
@@ -57,7 +55,6 @@ const StyledGridItem = styled(Grid)(({ theme }) => ({
 }));
 
 const MainPage = () => {
-  const ratingValue = 4;
   const navigate = useNavigate();
   const [detailedListings, setDetailedListings] = useState([]);
   const [filteredSearch, setFilteredSearch] = useState(false);
@@ -204,7 +201,7 @@ const MainPage = () => {
                       <CardContent>
                         <Rating
                           name="controlled-rating"
-                          value={ratingValue}
+                          value={computeRating(listing.reviews)}
                           readOnly
                           emptyIcon={<StarBorderIcon fontSize="inherit" />}
                         />

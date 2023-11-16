@@ -1,3 +1,10 @@
+/**
+ * @fileOverview Hint modal component
+ * @abstract Hint modal component is used to display the hint message
+ * @see https://mui.com/components/modal/
+ * @author Jason
+ * @version 1.0.0
+ */
 import React from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import propTypes from 'prop-types';

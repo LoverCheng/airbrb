@@ -6,6 +6,8 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 import parseISO from 'date-fns/parseISO';
 
 import Typography from '@mui/material/Typography';
+import Rating from '@mui/material/Rating';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar'
 import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent'
@@ -15,10 +17,11 @@ import http from '../../utils/http';
 import ConfirmModal from '../../utils/modals/confirmModal';
 import ReservedThumbComponent from './reservedThumbComponent';
 import ThumbnailCard from '../../utils/globalComponents/styledThumbnailCard';
-import { countDays } from '../../utils/countDays';
+import { countDays } from '../../utils/computingUtils/countDays';
+import commentContext from './commentContext';
+import computeRating from '../../utils/computingUtils/computeRating';
 
 const ViewingPage = () => {
-  const ratingValue = 1;
   const token = localStorage.getItem('token');
   const location = useLocation();
   const cardData = location.state;
@@ -30,6 +33,12 @@ const ViewingPage = () => {
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [hintMessage, setHintMessage] = useState('');
   const [reviews, setReviews] = useState([]);
+  const commentsGetters = {
+    reviews,
+  }
+  const commentsSetters = {
+    setReviews,
+  }
   const handleCloseModal = () => {
     setHintModalOpen(false);
   };
@@ -45,6 +54,7 @@ const ViewingPage = () => {
       setRangeSelected(false);
     }
   }, [dateRange]);
+
   // Function to check if a date should be enabled based on the availability
   const isDateEnabled = (date) => {
     return cardData.availability.some(({ startDate, endDate }) =>
@@ -108,124 +118,119 @@ const ViewingPage = () => {
 
   return (
     <>
-      <PrimarySearchAppBar />
-      <Box sx={{ padding: '2% 5%' }}>
-        <WelcomeTitle extraInfo={ '' }/>
-        <Box
-          sx={{
-            display: 'flex',
-            alignContent: 'center',
-            justifyContent: 'center',
-            flexWrap: 'wrap'
-          }}
-        >
-          <SingleCardComponent
-            cardData={cardData}
-            ratingValue={ratingValue}
-            useDateRange={cardData.useDateRange}
-          />
-          <ReservedThumbComponent
-            rangeSelected={rangeSelected}
-            countDays={countDays}
-            dateRange={dateRange}
-            handleDateChange={handleDateChange}
-            isDateEnabled={isDateEnabled}
-            handleClearDates={handleClearDates}
-            handleReserveButton={handleReserveButton}
-            cardData={cardData}
-          />
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignContent: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            // margin: '20px 20px',
-          }}
-        >
-          <ThumbnailCard
+      <commentContext.Provider value={{ commentsGetters, commentsSetters }}>
+        <PrimarySearchAppBar />
+        <Box sx={{ padding: '2% 5%' }}>
+          <WelcomeTitle extraInfo={ '' }/>
+          <Box
             sx={{
-              minWidth: '800px',
-              margin: '10px 20px',
-              '@media (max-width: 920px)': {
-                maxWidth: '400px',
-                minWidth: '400px',
-                margin: '20px 0px',
-              },
+              display: 'flex',
+              alignContent: 'center',
+              justifyContent: 'center',
+              flexWrap: 'wrap'
             }}
           >
-            <Box
+            <SingleCardComponent
+              cardData={cardData}
+              ratingValue={computeRating(reviews)}
+              useDateRange={cardData.useDateRange}
+            />
+            <ReservedThumbComponent
+              rangeSelected={rangeSelected}
+              countDays={countDays}
+              dateRange={dateRange}
+              handleDateChange={handleDateChange}
+              isDateEnabled={isDateEnabled}
+              handleClearDates={handleClearDates}
+              handleReserveButton={handleReserveButton}
+              cardData={cardData}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignContent: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              // margin: '20px 20px',
+            }}
+          >
+            <ThumbnailCard
               sx={{
-                margin: '20px 20px',
-              }}>
-              <Typography
-                variant="h6"
-                color="text.secondary"
+                minWidth: '800px',
+                margin: '10px 20px',
+                '@media (max-width: 920px)': {
+                  maxWidth: '400px',
+                  minWidth: '400px',
+                  margin: '20px 0px',
+                },
+              }}
+            >
+              <Box
                 sx={{
-                  fontWeight: 'lighter',
-                  // textAlign: 'center',
-                  marginTop: '10px',
-                }}
-              >
-                Comments:
-              </Typography>
-                {
-                  reviews.map((reserving, index) => (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'space-around',
-                        margin: '10px 0px',
-                        padding: '10px 0px',
-                        border: '1px solid black',
-                        borderRadius: '10px',
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        color="text.secondary"
+                  margin: '20px 20px',
+                }}>
+                <Typography
+                  variant="h6"
+                  color="text.secondary"
+                  sx={{
+                    fontWeight: 'lighter',
+                    marginTop: '10px',
+                  }}
+                >
+                  Comments:
+                </Typography>
+                  {
+                    reviews.map((reserving, index) => (
+                      <Box
+                        key={index}
                         sx={{
-                          fontWeight: 'lighter',
-                          // textAlign: 'center',
-                          marginTop: '10px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'space-around',
+                          margin: '10px 0px',
+                          padding: '10px 0px',
+                          border: '1px solid black',
+                          borderRadius: '10px',
                         }}
                       >
-                        {`rating: ${reserving.rating}`}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        color="text.secondary"
-                        sx={{
-                          fontWeight: 'lighter',
-                          // textAlign: 'center',
-                          marginTop: '10px',
-                        }}
-                      >
-                        {`comment: ${reserving.comment}`}
-                      </Typography>
-                    </Box>
-                  ))
-
-                }
-            </Box>
-          </ThumbnailCard>
+                        <Rating
+                          name="controlled-rating"
+                          value={reserving.rating}
+                          disabled={true}
+                          emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                        />
+                        <Typography
+                          variant="h6"
+                          color="text.secondary"
+                          sx={{
+                            fontWeight: 'lighter',
+                            // textAlign: 'center',
+                            marginTop: '10px',
+                          }}
+                        >
+                          {`${reserving.comment}`}
+                        </Typography>
+                      </Box>
+                    ))
+                  }
+              </Box>
+            </ThumbnailCard>
+          </Box>
         </Box>
-      </Box>
-      <HintModal
-        open={hintModalOpen}
-        handleClose={handleCloseModal}
-        hintMessage={hintMessage}
-      />
-      <ConfirmModal
-        confirmModalOpen={confirmModalOpen}
-        handleConfirm={handleConfirm}
-        setConfirmModalOpen={setConfirmModalOpen}
-        dateRange={dateRange}
-      />
+        <HintModal
+          open={hintModalOpen}
+          handleClose={handleCloseModal}
+          hintMessage={hintMessage}
+        />
+        <ConfirmModal
+          confirmModalOpen={confirmModalOpen}
+          handleConfirm={handleConfirm}
+          setConfirmModalOpen={setConfirmModalOpen}
+          dateRange={dateRange}
+        />
+      </commentContext.Provider>
     </>
   )
 }

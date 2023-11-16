@@ -1,4 +1,10 @@
-import http from './http';
+/**
+ * @fileOverview fetchListingsDetails component
+ * @abstract fetchListingsDetails component is used to fetch the listings details
+ * @author Jason
+ * @version 1.0.0
+ */
+import http from '../http';
 import fetchBookingListings from './fetchBookingListings';
 
 const fetchListingDetails = async (id) => {

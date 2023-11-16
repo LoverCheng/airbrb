@@ -1,3 +1,8 @@
+/**
+ * @fileOverview The main entry point of the frontend application.
+ * @author Jason
+ * @version 1.0.0
+ */
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import MainPage from './Apis/mainPage/MainPage';

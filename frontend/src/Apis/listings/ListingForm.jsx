@@ -23,7 +23,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import BedroomForm from './components/bedroomComponent';
 
 import { BedroomContext } from './bedroomContext';
-import { fileToDataUrl } from '../../utils/fileToDataUrl';
+import { fileToDataUrl } from '../../utils/asyncUtils/fileToDataUrl';
 import http from '../../utils/http';
 import stripWhitespace from '../../utils/cleanData';
 import HintModal from '../../utils/modals/hintModal';

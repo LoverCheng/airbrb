@@ -1,3 +1,8 @@
+/**
+ * @abstract Calculates the total number of days that have been accepted for the current year
+ * @param {Array} bookings
+ * @returns {number} totalDays
+ */
 function calculateTotalAcceptedDays (bookings) {
   const currentYear = new Date().getFullYear();
   const oneDay = 24 * 60 * 60 * 1000; // milliseconds in one day

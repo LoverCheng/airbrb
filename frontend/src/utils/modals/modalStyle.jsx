@@ -1,4 +1,10 @@
-// Style for the modal, using the system properties for responsiveness
+/**
+ * @fileOverview This file contains the modal style.
+ * @abstract Style for the modal, using the system properties for responsiveness
+ * @author Jason
+ * @version 1.0.0
+ */
+
 const style = {
   position: 'absolute',
   top: '50%',

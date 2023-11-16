@@ -9,9 +9,9 @@ import {
   Typography,
 } from '@mui/material';
 
-import calculateTotalAcceptedDays from '../../utils/totalAcceptedDays';
+import calculateTotalAcceptedDays from '../../utils/computingUtils/totalAcceptedDays';
 import ThumbnailCard from '../../utils/globalComponents/styledThumbnailCard';
-import { countDays } from '../../utils/countDays';
+import { countDays } from '../../utils/computingUtils/countDays';
 import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar';
 import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent';
 import BookingInfoComponent from './BookingInfoComponent';
@@ -38,8 +38,6 @@ function calculateTotalPriceThisYear (bookings) {
 }
 
 const BookingsPage = () => {
-  // const ratingValue = 1;
-  // const useDateRange = false;
   const location = useLocation();
   const cardData = location.state;
   console.log('cardData');

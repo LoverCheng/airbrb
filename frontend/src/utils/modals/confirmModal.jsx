@@ -1,3 +1,10 @@
+/**
+ * @fileOverview confirmModal component
+ * @abstract confirmModal component is used to confirm the booking of a property
+ * @see https://mui.com/components/modal/
+ * @author Jason
+ * @version 1.0.0
+ */
 import React from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import propTypes from 'prop-types';

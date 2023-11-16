@@ -25,9 +25,9 @@ import http from '../../utils/http';
 import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar';
 import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent';
 import SingleCardComponent from '../../utils/globalComponents/singleCardComponent';
+import computeRating from '../../utils/computingUtils/computeRating';
 
 const ListingForm = () => {
-  const ratingValue = 4;
   const location = useLocation();
   const navigate = useNavigate();
   const cardData = location.state;
@@ -130,7 +130,7 @@ const ListingForm = () => {
         <WelcomeTitle extraInfo={ info }/>
         <SingleCardComponent
           cardData={cardData}
-          ratingValue={ratingValue}
+          ratingValue={computeRating(cardData.reviews)}
           useDateRange={false}
         />
       </Box>

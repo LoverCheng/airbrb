@@ -1,3 +1,8 @@
+/**
+ * @abstract stripWhitespace function is used to strip whitespace from string values in an object
+ * @param {object} obj
+ * @returns {object} obj
+ */
 // Create a function to recursively strip whitespace from string values in an object
 const stripWhitespace = (obj) => {
   Object.keys(obj).forEach(key => {

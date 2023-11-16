@@ -1,3 +1,9 @@
+/**
+ * @fileOverview SingleCardComponent is a component that renders a vertical single card
+ * @see https://mui.com/components/cards/#customization
+ * @author Jason
+ * @version 1.0.0
+ */
 import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';

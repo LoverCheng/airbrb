@@ -201,8 +201,8 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 		- If the user did not use a date range for search in `2.3.2` - display **price per night** ✅
 	- All images of the property including the listing thumbnail (they don't have to be visible all at once) ✅
 	- Type ✅
-	- Reviews 
-	- Review rating 
+	- Reviews ✅
+	- Review rating ✅
 	- Number of bedrooms ✅
 	- Number of beds ✅
 	- Number of bathrooms ✅
@@ -217,7 +217,7 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 
 #### 2.4.3 Leaving a listing review
 
-* A logged in user should be able to leave a review for listings they've booked that will immidiately appear on the listing screen after it's been posted by the user. The review will consist of a score (number) and a comment (text). You can leave an unlimited number of reviews per listing.  
+* A logged in user should be able to leave a review for listings they've booked that will immidiately appear on the listing screen after it's been posted by the user. The review will consist of a score (number) and a comment (text). You can leave an unlimited number of reviews per listing. ✅
 * Please note: Normally you'd prohibit reviews until after a booking visit is complete, but in this case for simplicity we allow reviews to be left as soon as a booking's status becomes `accepted`. ✅
 * If the user has made more than 1 booking for a given listing, you can use any of their `bookingid`s for the purpose of leaving a review. Just as long as the booking has status `accepted`. ✅
 
@@ -242,6 +242,7 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 ### 2.6. Feature Set 6. Advanced Features (0% for solo, 8% for pairs)
 
 #### 2.6.1 Advanced Listing Rating Viewing
+
 * On hover of star rating a tool tip appears which displays the break down of how many people rated the booking (both in percentage terms and absolute terms) within each star category. (e.g. see Amazon product rating for reference)
 * If you click on a particular star rating, another screen should appear (that can be closed) that shows all of the individual reviews left for that rating.
 

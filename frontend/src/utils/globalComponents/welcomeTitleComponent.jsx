@@ -1,6 +1,6 @@
 /**
  * @fileOverview Welcome title component
- * @author <Jason>
+ * @author Jason
  * @version 1.0.0
  * @abstract Component for the welcome title
  */
@@ -15,7 +15,6 @@ const WelcomeTitle = (extraInfo) => {
       <Paper elevation={0} sx={{ margin: '20px' }}>
       <Typography variant="h4">Welcome! {user}</Typography>
       <Typography variant="body1" sx={{ marginBottom: '25px', color: 'gray', fontWeight: 'light' }}>
-        {/* Guests can reserve your place 24 hours after you publish. */}
         <br />
         { info }
       </Typography>

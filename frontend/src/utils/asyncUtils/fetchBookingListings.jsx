@@ -1,4 +1,10 @@
-import http from './http';
+/**
+ * Fetches the bookings from the backend
+ * @author Jason
+ * @version 1.0.0
+ */
+
+import http from '../http';
 
 const fetchBookingListings = async () => {
   try {

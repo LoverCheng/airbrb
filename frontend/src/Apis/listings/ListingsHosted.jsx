@@ -25,12 +25,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import Badge from '@mui/material/Badge';
 
 import http from '../../utils/http';
-import fetchAllListingsAndDetailsSequentially from '../../utils/fetchListingsDetails';
+import fetchAllListingsAndDetailsSequentially from '../../utils/asyncUtils/fetchListingsDetails';
 import PrimarySearchAppBar from '../mainPage/navigationComponents/navigationBar';
 import WelcomeTitle from '../../utils/globalComponents/welcomeTitleComponent';
 import HintModal from '../../utils/modals/hintModal';
 import ThumbnailCard from '../../utils/globalComponents/styledThumbnailCard';
 import UnderLinedText from '../../utils/globalComponents/styledUnderlinedText';
+import computeRating from '../../utils/computingUtils/computeRating';
 
 const StyledGridContainer = styled(Grid)(({ theme }) => ({
 }));
@@ -76,7 +77,6 @@ const ListingsHosted = () => {
   const user = localStorage.getItem('user');
   const navigate = useNavigate();
   const [detailedListings, setDetailedListings] = useState([]);
-  const ratingValue = 2.4;
   const [hintModalOpen, setHintModalOpen] = useState(false);
   const [hintMessage, setHintMessage] = useState('');
 
@@ -226,7 +226,7 @@ const ListingsHosted = () => {
                   <CardContent>
                     <Rating
                       name="controlled-rating"
-                      value={ratingValue}
+                      value={computeRating(listing.reviews)}
                       readOnly
                       emptyIcon={<StarBorderIcon fontSize="inherit" />}
                     />
