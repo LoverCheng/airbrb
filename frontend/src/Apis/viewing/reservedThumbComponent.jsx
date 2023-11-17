@@ -78,6 +78,8 @@ const ReservedThumbComponent = ({
   }
 
   useEffect(() => {
+    // if there is no token, do not fetch booking details
+    if (!token) return;
     fetchBookingListings().then((bookings) => {
       setBookingDetails(bookings);
     });
@@ -107,7 +109,6 @@ const ReservedThumbComponent = ({
         hintMessage={hintMessage}
       />
       <ThumbnailCard
-      // userSelect='all'
       sx={{
         display: 'block',
         minWidth: '400px',

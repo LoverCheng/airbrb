@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/system';
 import isWithinInterval from 'date-fns/isWithinInterval';
@@ -21,6 +21,7 @@ import ThumbnailCard from '../../utils/globalComponents/styledThumbnailCard';
 import { countDays } from '../../utils/computingUtils/countDays';
 import commentContext from './commentContext';
 import computeRating from '../../utils/computingUtils/computeRating';
+import { Button } from '@mui/material';
 
 const FlexCenterBox = styled(Box)({
   display: 'flex',
@@ -57,6 +58,7 @@ const ViewingPage = () => {
   const token = localStorage.getItem('token');
   const location = useLocation();
   const cardData = location.state;
+  const navigate = useNavigate();
   console.log(cardData);
   const [dateRange, setDateRange] = useState(
     { startDate: null, endDate: null },
@@ -149,12 +151,29 @@ const ViewingPage = () => {
     });
   }
 
+  const handleBackButton = () => {
+    navigate('/');
+  }
+
   return (
     <>
       <commentContext.Provider value={{ commentsGetters, commentsSetters }}>
         <PrimarySearchAppBar />
-        <Box sx={{ padding: '2% 5%' }}>
+        <Box sx={{ padding: '2% 5%', position: 'relative' }}>
           <WelcomeTitle extraInfo={ '' }/>
+          <Button
+            sx={{
+              position: 'absolute',
+              right: '5%',
+              color: 'gray',
+              top: '0%',
+              textTransform: 'none'
+            }}
+            // not upper case
+            onClick={handleBackButton}
+          >
+            Back to home page
+          </Button>
           <Box
             sx={{
               display: 'flex',
@@ -192,7 +211,7 @@ const ViewingPage = () => {
                 >
                   Your booking history:
                 </Typography>
-                  {cardData.bookings.map((booking, index) => (
+                  {token && cardData.bookings.map((booking, index) => (
                     <EachCommentBox key={'booking' + index}>
                       <M20LRBox>
                         <Typography
