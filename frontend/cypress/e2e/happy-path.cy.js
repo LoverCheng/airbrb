@@ -38,33 +38,33 @@ describe('airbrb happy path', () => {
   });
   // <==================== END ==========================>
   // Step1 START =====> create a user
-  //   it('Step1: should navigate to register page successfully', () => {
-  //     cy.get('[data-testid="AccountCircleIcon"]').should('be.visible').click();
-  //     cy.contains('li', 'Sign up')
-  //       .should('be.visible') // Assert that the element is visible
-  //       .click(); // Interact with the element
-  //     cy.get('h2').should('have.text', 'Register to Airbnb');
-  //     cy.get('input[type="email"]').focus().type('jason@gmail.com');
-  //     cy.get('input[id="password"]').focus().type('123456');
-  //     cy.get('input[id="confirmed-password"]').focus().type('123456');
-  //     cy.get('input[id="username"]').focus().type('jason');
-  //     cy.contains('button', 'Register').should('be.visible').click();
-  //     cy.url().should('include', 'localhost:3000/');
-  //   });
-  // <==================== END ==========================>
-  // Step1 START =====> login
-  it('Step1: should navigate to login page successfully', () => {
+  it('Step1: should navigate to register page successfully', () => {
     cy.get('[data-testid="AccountCircleIcon"]').should('be.visible').click();
-    cy.contains('li', 'Log in')
+    cy.contains('li', 'Sign up')
       .should('be.visible') // Assert that the element is visible
       .click(); // Interact with the element
-    cy.get('h2').should('have.text', 'Login to Airbnb');
-    cy.get('input[id="email"]').focus().type('jason@gmail.com');
+    cy.get('h2').should('have.text', 'Register to Airbnb');
+    cy.get('input[type="email"]').focus().type('jason@gmail.com');
     cy.get('input[id="password"]').focus().type('123456');
-    cy.contains('button', 'Login').should('be.visible').click();
-    cy.wait(1000);
+    cy.get('input[id="confirmed-password"]').focus().type('123456');
+    cy.get('input[id="username"]').focus().type('jason');
+    cy.contains('button', 'Register').should('be.visible').click();
     cy.url().should('include', 'localhost:3000/');
   });
+  // <==================== END ==========================>
+  // Step1 START =====> login
+  // it('Step1: should navigate to login page successfully', () => {
+  //   cy.get('[data-testid="AccountCircleIcon"]').should('be.visible').click();
+  //   cy.contains('li', 'Log in')
+  //     .should('be.visible') // Assert that the element is visible
+  //     .click(); // Interact with the element
+  //   cy.get('h2').should('have.text', 'Login to Airbnb');
+  //   cy.get('input[id="email"]').focus().type('jason@gmail.com');
+  //   cy.get('input[id="password"]').focus().type('123456');
+  //   cy.contains('button', 'Login').should('be.visible').click();
+  //   cy.wait(1000);
+  //   cy.url().should('include', 'localhost:3000/');
+  // });
   // <==================== END ==========================>
   // Step2 START =====> create a listing
   it('Step2: should navigate to create listing page successfully', () => {
@@ -124,6 +124,7 @@ describe('airbrb happy path', () => {
   // <==================== END ==========================>
   // Step3 START =====> edit a listing
   it('Step3: Updates the thumbnail and title of the listing successfully', () => {
+    cy.wait(2000);
     cy.get('img[alt="Your Best choice"]').click();
     cy.get('input[name="title"]').focus().clear().type('Title updated');
     const thumbnailPath = 'thumbnail-update.jpeg';
@@ -133,7 +134,7 @@ describe('airbrb happy path', () => {
   // <==================== END ==========================>
   // Step4 START =====> set availability
   it('Step4: Publish a listing successfully', () => {
-    cy.wait(1000);
+    cy.wait(2000);
     cy.get('path[d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"]').click({
       force: true,
     });
