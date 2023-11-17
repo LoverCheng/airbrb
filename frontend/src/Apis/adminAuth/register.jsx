@@ -3,6 +3,7 @@
  * @module RegisterPage
  */
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { Button, Box, FormControl, FormHelperText, InputLabel, OutlinedInput } from '@mui/material';
 import propTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
@@ -13,6 +14,12 @@ import http from '../../utils/http';
 const styleFormControl = {
   pt: 2,
 }
+
+const Pb1FormControl = styled(FormControl)(({ theme }) => ({
+  '& > *': {
+    marginBottom: '8px', // Adjust this value as needed
+  },
+}));
 
 const RegisterPage = ({ onClose }) => {
   const [username, setUsername] = useState('');
@@ -68,7 +75,7 @@ const RegisterPage = ({ onClose }) => {
       }
       <h2>Register to Airbnb</h2>
       <Stack sx={ styleFormControl }>
-        <FormControl>
+        <Pb1FormControl>
           <InputLabel htmlFor="email">email</InputLabel>
           <OutlinedInput
             required
@@ -79,9 +86,9 @@ const RegisterPage = ({ onClose }) => {
             onChange={(e) => setEmail(e.target.value)}
             variant="outlined"
           />
-        </FormControl>
+        </Pb1FormControl>
 
-        <FormControl>
+        <Pb1FormControl>
           <InputLabel htmlFor="password">password</InputLabel>
           <OutlinedInput
             required
@@ -93,9 +100,9 @@ const RegisterPage = ({ onClose }) => {
             variant="outlined"
             onBlur={checkPasswordConfirmation}
           />
-        </FormControl>
+        </Pb1FormControl>
 
-        <FormControl>
+        <Pb1FormControl>
           <InputLabel htmlFor="confirmed-password">confirm</InputLabel>
           <OutlinedInput
             id="confirmed-password"
@@ -114,9 +121,9 @@ const RegisterPage = ({ onClose }) => {
               Password not same
             </FormHelperText>
           )}
-        </FormControl>
+        </Pb1FormControl>
 
-        <FormControl>
+        <Pb1FormControl>
           <InputLabel htmlFor="username">username</InputLabel>
           <OutlinedInput
               id="username"
@@ -126,7 +133,7 @@ const RegisterPage = ({ onClose }) => {
               onChange={(e) => setUsername(e.target.value)}
               variant="outlined"
           />
-        </FormControl>
+        </Pb1FormControl>
       </Stack>
     <Button onClick={(e) => handleRegister(e)}>Register</Button>
     <Button onClick={onClose}>Close</Button>

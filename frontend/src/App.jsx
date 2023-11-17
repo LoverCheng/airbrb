@@ -5,6 +5,8 @@
  */
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
+
 import MainPage from './Apis/mainPage/MainPage';
 import { ModalWrapper } from './Apis/adminAuth/modals';
 import ListingForm from './Apis/listings/ListingForm';
@@ -27,22 +29,25 @@ const LayoutWithModal = () => {
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LayoutWithModal />} >
-          <Route index element={<MainPage />} />
-          <Route path="login" element={<EmptyComponent/>}/>
-          <Route path="signUp" element={<EmptyComponent/>}/>
-        </Route>
-        <Route path="/listings/new" element={<ListingForm/>}/>
-        <Route path="/listings/hosted" element={<ListingsHosted/>}/>
-        <Route path="/listings/update" element={<ListingForm/>}/>
-        <Route path="/listings/push" element={<ListingPush/>}/>
-        <Route path="/listings/viewing" element={<ViewingPage/>}/>
+    <>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path="/" element={<LayoutWithModal />} >
+            <Route index element={<MainPage />} />
+            <Route path="login" element={<EmptyComponent/>}/>
+            <Route path="signUp" element={<EmptyComponent/>}/>
+          </Route>
+          <Route path="/listings/new" element={<ListingForm/>}/>
+          <Route path="/listings/hosted" element={<ListingsHosted/>}/>
+          <Route path="/listings/update" element={<ListingForm/>}/>
+          <Route path="/listings/push" element={<ListingPush/>}/>
+          <Route path="/listings/viewing" element={<ViewingPage/>}/>
 
-        <Route path="/bookings/view" element={<BookingsPage/>}/>
-      </Routes>
-    </Router>
+          <Route path="/bookings/view" element={<BookingsPage/>}/>
+        </Routes>
+      </Router>
+    </>
   );
 };
 

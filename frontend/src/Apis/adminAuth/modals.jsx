@@ -23,6 +23,7 @@ const useResponsiveModalStyle = () => {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
+    borderRadius: '5%', // Makes the button round like a radio button
   };
 };
 

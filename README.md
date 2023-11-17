@@ -164,10 +164,10 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 * This screen displays a list of all published listings (rows or thumbnails). The information displayed in each listing is: 
   * Title  ✅
   * Thumbnail of property (or video if advanced)  ✅
-  * Number of total reviews 
+  * Number of total reviews ✅
   * (any more information you want, though that's optional).  ✅
 * In terms of ordering of displayed published listings:
-  * Listings that involve bookings made by the customer with status  `accepted` or `pending` should appear first in the list (if the user is logged in). 
+  * Listings that involve bookings made by the customer with the status `accepted` or `pending` should appear first in the list (if the user is logged in). ✅
   * All remaining listings should be displayed in alphabetical order of title. ✅
 
 #### 2.3.2. Search Filters
@@ -181,9 +181,9 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 	* Number of bedrooms (a minimum and maximum number of bedrooms, expressed either via text fields or a slider) ✅
 	* Date range (two date fields) - only display bookings that are available for the entire date range as inputted by the user. ✅
 	* Price (a minimum and maximum price, expressed either via text fields or a slider) ✅
-	* Review ratings:
-		- Sort results from highest to lowest review rating **or** from lowest to highest review rating depending 
-		- If there is more than one listing with the same rating, their order does not matter 
+	* Review ratings: ✅
+		- Sort results from highest to lowest review rating **or** from lowest to highest review rating depending ✅
+		- If there is more than one listing with the same rating, their order does not matter ✅
 * The search section must have an associated search button that will action the search to reload the results given the new filters.✅
 
 ### 2.4. Feature Set 4. Viewing and Booking Listings (9% for solo, 8% for pairs)
@@ -206,10 +206,11 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 	- Number of bedrooms ✅
 	- Number of beds ✅
 	- Number of bathrooms ✅
- * On this screen if the user is logged in and they have made booking for this listing, they should be able to see the status of their booking (see `2.4.2`). 
- * (Note: if the user has made more than 1 booking for a listing, display the status of all the bookings) 
+ * On this screen if the user is logged in and they have made booking for this listing, they should be able to see the status of their booking (see `2.4.2`). ✅
+ * (Note: if the user has made more than 1 booking for a listing, display the status of all the bookings) ✅
 
 #### 2.4.2. Making a booking and checking its status
+
  * On the screen described in `2.4.1`, a **logged in** user should be able to make a booking for a given listing they are viewing between the dates they are after. The user enters two dates (this includes day, month and year), and assume the dates describe a valid booking, a button allows for the confirmation of the booking. ✅
  * A user can make an unlimited number of bookings per listing even on overlapping date ranges and even if other users have already booked the property for those dates. It is up to the host to check if they have double booked their listing and accept/deny the bookings accordingly. ✅
  * A booking's length (in days) is defined based on _how many nights_ a user spends at the listed property (this is how bookings are defined on all modern accommodation platforms). For example, a booking from the 15th to the 17th of November consists of 2 days in length - 15th to the 16th and 16th to the 17th. As this is a late addition to the specification, we will not be strictly enforcing how you chose to calculate a booking's length. So for the case described here, it could also be expressed as a 3 day long booking (15th, 16th and 17th as the 3 days). ✅
@@ -261,46 +262,48 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 
 * Linting must be run from inside the `frontend` folder by running `npm run lint`.
 
-### 2.8. Testing
+### 2.8. Testing ✅
 
-As part of this assignment you are required to write some tests for your components (component testing), and for your application as a whole (ui testing).
+As part of this assignment you are required to write some tests for your components (component testing), and for your application as a whole (ui testing). 
 
 For **component testing**, you must:
- * Write tests for different components (3 if solo, 6 if working in a pair)
- * For each of the components, they mustn't have more than 50% similarity (e.g. you can't test a "Card" component and a "BigCard" component, that are virtually the same)
- * Ensure your tests have excellent **coverage** (look at all different use cases and edge cases)
- * Ensure your tests have excellent **clarity** (well commented and code isn't overly complex)
- * Ensure your tests are **designed** well (logical ordering of tests, avoid any tests that aren't necessary or don't add any meaningful value)
+ * Write tests for different components (3 if solo, 6 if working in a pair) ✅
+ * For each of the components, they mustn't have more than 50% similarity (e.g. you can't test a "Card" component and a "BigCard" component, that are virtually the same)✅
+ * Ensure your tests have excellent **coverage** (look at all different use cases and edge cases) ✅
+ * Ensure your tests have excellent **clarity** (well commented and code isn't overly complex) ✅
+ * Ensure your tests are **designed** well (logical ordering of tests, avoid any tests that aren't necessary or don't add any meaningful value) ✅
  * (We encourage you to only use shallow component rendering)
 
-You can use methods discussed in lectures for component testing, or you can use `cypress`.
+You can use methods discussed in lectures for component testing, or you can use `cypress`. ✅
 
 For **ui testing**, you must:
  * Write a test for the "happy path" of an admin that is described as:
-  1. Registers successfully
-	2. Creates a new listing successfully
-	3. Updates the thumbnail and title of the listing successfully
-	4. Publish a listing successfully
-	5. Unpublish a listing successfully
-	6. Make a booking successfully
-	7. Logs out of the application successfully
-	8. Logs back into the application successfully
- * (If working in a pair) also required to write a test for another path through the program, describing the steps and the rationale behind this choice in `TESTING.md`
- * (If working solo) include a short rationale of the testing you have undertaken within `TESTING.md`
+  1. Registers successfully ✅
+  2. Creates a new listing successfully ✅
+  3. Updates the thumbnail and title of the listing successfully ✅
+  4. Publish a listing successfully
+  5. Unpublish a listing successfully
+  6. Make a booking successfully
+  7. Logs out of the application successfully
+  8. Logs back into the application successfully
+ * (If working in a pair) also required to write a test for another path through the program, describing the steps and the rationale behind this choice in `TESTING.md` ✅
+ * (If working solo) include a short rationale of the testing you have undertaken within `TESTING.md` ✅
 
 #### Advice for Component Testing
+
  * Find a simple primitive component you've written, and if you don't have one, write one. This could include a common button you use, or a popup, or a box, or an input. Often examples of these are just MUI or other library components you might have wrapped slightly and includes some props you've passed in
  * Simply write some unit tests that check that for a given prop input, the component behaves in a certain way (e.g. action or visual display), etc etc
  * E.G. Creating a `MyButton` that wraps a MUI `Button`.
  * E.G. A simple example is the list of bookings. It takes in booking informed we've defined and renders a bunch of MUI ListItems, Checkboxes, TextFields and IconButtons
  * Your app is going to be a set of pages, and those pages are made up of primitive components. But if you don't have layers of components between that it means your code is not well modularised. Another example could be if we said to you - no component should be longer than 50 lines of code. You'd probably go refactor to group common sets of primitives together into a new component.
 
-#### Advice for UI Testing
+#### Advice for UI Testing 
 
  * For cypress, consider adding `cy.wait(1000)` if necessary to add slight pauses in your tests if you find that the page is rendering slower than cypress is trying to test.
  * If you're having issues using Cypress on WSL2, try following [this guide](https://shouv.medium.com/how-to-run-cypress-on-wsl2-989b83795fb6).
 
-#### Other advice / help
+#### Other advice / help 
+
 * You can welcome to use `enzyme` for testing if you prefer - as long as everything works by running `npm run test`.
 * One topic that has helped students is [mocking fetch calls with jest](https://medium.com/fernandodof/how-to-mock-fetch-calls-with-jest-a666ae1e7752).
 * The tutor will run an empty (reset) backend when running `npm run test` whilst marking.
@@ -308,13 +311,14 @@ For **ui testing**, you must:
  * Use this unofficial React 17 adapter: https://www.npmjs.com/package/@wojtekmaj/enzyme-adapter-react-17; or
  * Downgrade react and react-dom to 16, though this could break other things depending on what other dependencies you're using.
 
-#### Running tests
+#### Running tests ✅
 
-Tests must be run from inside the `frontend` folder by running `npm run test`.
+Tests must be run from inside the `frontend` folder by running `npm run test`. ✅
 
-You are welcome to modify the `npm run test` command by updating the `test` script inside `frontend/package.json`. For example, if you would like to run standard react testing alongside cypress UI tests you can use `react-scripts test —watchAll=false && npm run cypress open` and if you've used cypress for both component and happy path test, then you can replace that line with `cypress open`.
+You are welcome to modify the `npm run test` command by updating the `test` script inside `frontend/package.json`. For example, if you would like to run standard react testing alongside cypress UI tests you can use `react-scripts test —watchAll=false && npm run cypress open` and if you've used cypress for both component and happy path test, then you can replace that line with `cypress open`. ✅
 
 ### 2.9. Other notes
+
 * The port you can use to `fetch` data from the backend is defined in `frontend/src/config.json`
 * [This article may be useful to some students](https://stackoverflow.com/questions/66284286/react-jest-mock-usenavigate)
 * For users of typescript, [follow this guide](https://gitlab.cse.unsw.edu.au/COMP6080/23T3/react-typescript)
@@ -367,10 +371,10 @@ Please note: You CAN modify the backend for bonus marks. But you cannot modify t
 
 ### 4.1. Languages
 
- * You must implement this assignment in ReactJS. You cannot use other declarative frameworks, such as AngularJS, or VueJS.
- * You must use ReactJS solutions wherever possible, and avoid doing any direct DOM manipulation unless completely unavoidable (check with course staff).
- * You can use any CSS libraries that you would like, such as bootstrap or material-ui.
- * You are able to use and install any library that is available to install via `npm install`.
+ * You must implement this assignment in ReactJS. You cannot use other declarative frameworks, such as AngularJS, or VueJS.✅
+ * You must use ReactJS solutions wherever possible, and avoid doing any direct DOM manipulation unless completely unavoidable (check with course staff). ✅
+ * You can use any CSS libraries that you would like, such as bootstrap or material-ui. ✅
+ * You are able to use and install any library that is available to install via `npm install`. ✅
 
 ### 4.2. Browser Compatibility
  * You should ensure that your programs have been tested on one of the following two browsers:
